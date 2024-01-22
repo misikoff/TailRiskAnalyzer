@@ -11,10 +11,10 @@
 #' @export
 #'
 #' @examples
-#' is_normal_given_event(0.999, 10, 2)
+#' p_normal_given_event(0.999, 10, 2)
 p_normal_given_event <- function(prior = 0.5, z = 10, t_df = 2) {
-  p_event_given_norm <- stats::pnorm(z, lower.tail = FALSE)
-  p_event_given_t <- stats::pt(z, t_df, lower.tail = FALSE)
+  p_event_given_norm <- stats::pnorm(abs(z), lower.tail = FALSE)
+  p_event_given_t <- stats::pt(abs(z), t_df, lower.tail = FALSE)
 
   numerator <- prior * p_event_given_norm
   denominator <- (1 - prior) * p_event_given_t + prior * p_event_given_norm
