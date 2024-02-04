@@ -23,3 +23,9 @@ Here is the function. It is important because ...
 ```{r}
 p_normal_given_event(0.999, 10, 2)
 ```
+
+```{r}
+draw_lln_with_func_facet(400,
+  mean_of_func = 2.5, rgamma, shape = 10, scale = 0.25
+)
+```
