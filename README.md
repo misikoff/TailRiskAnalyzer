@@ -9,3 +9,7 @@
 ```r
 devtools::install_github("misikoff/TailRiskAnalyzer")
 ```
+
+
+<!-- embed output.gif from R directory -->
+![output](R/output.gif)

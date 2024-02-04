@@ -1,0 +1,144 @@
+---
+title: "test-animation"
+author: "Thomas Misikoff"
+date: "2024-02-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gganimate)
+library(ggplot2)
+library(gifski)
+```
+
+
+```{r}
+set.seed(123)
+draw_lln <- function(n = 1000) {
+  # build a dataframe of time, value and average
+
+  # iteratively populate the dataframe. the time will increase from 1 to n, the value will be a random draw from a normal (0,1) and the average will be the average of the elements from 1 to the current time
+  df <- data.frame(time = 1:n, value = rnorm(n), average = NA)
+  for (i in 1:n) {
+    df$average[i] <- mean(df$value[1:i])
+  }
+  df |> head()
+
+
+  # Plot
+  x <- df |>
+    ggplot(aes(x = time, y = average)) +
+    geom_line() +
+    geom_point() +
+    # scale_color_viridis(discrete = TRUE) +
+    ggtitle("Popularity of American names in the previous 30 years") +
+    # theme_ipsum() +
+    ylab("Number of babies born") +
+    transition_reveal(time)
+  animate(x, duration = 5, fps = 20, width = 400, height = 400, renderer = gifski_renderer())
+}
+```
+
+
+```{r}
+draw_lln_with_func <- function(n = 1000, mean_of_func, random_function, ...) {
+  # build a dataframe of time, value and average
+
+  # iteratively populate the dataframe. the time will increase from 1 to n, the value will be a random draw from a normal (0,1) and the average will be the average of the elements from 1 to the current time
+  df <- data.frame(time = 1:n, value = random_function(n, ...), average = NA)
+  for (i in 1:n) {
+    df$average[i] <- mean(df$value[1:i])
+  }
+  df |> head()
+
+
+  # Plot
+  x <- df |>
+    ggplot(aes(x = time, y = average)) +
+    geom_line() +
+    geom_point() +
+    # scale_color_viridis(discrete = TRUE) +
+    ggtitle("Popularity of American names in the previous 30 years") +
+    # theme_ipsum() +
+    ylab("Number of babies born") +
+    geom_hline(yintercept = mean_of_func, linetype = "dashed", color = "red") +
+    transition_reveal(time)
+  animate(x, duration = 5, fps = 20, width = 400, height = 400, renderer = gifski_renderer())
+}
+```
+
+```{r}
+# draw_lln_with_func(1000, mean_of_func = 2.5, rgamma, shape = 10, scale = 0.25)
+```
+
+```{r}
+draw_lln_with_func_facet <- function(n = 1000, mean_of_func, random_function, ...) {
+  print(as.character(substitute(random_function)))
+  # build a dataframe of time, value and average
+  name <- as.character(substitute(random_function))
+  # iteratively populate the dataframe. the time will increase from 1 to n, the value will be a random draw from a normal (0,1) and the average will be the average of the elements from 1 to the current time
+  df <- data.frame(time = 1:n, value = random_function(n, ...), average = NA, theoretical_mean = mean_of_func, type = name, lower = 0, upper = 0)
+  for (i in 1:n) {
+    df$average[i] <- mean(df$value[1:i])
+    variance <- var(df$value[1:i])
+    df$lower[i] <- mean(df$value[1:i]) - 1.96 * sqrt(variance / i)
+    df$upper[i] <- mean(df$value[1:i]) + 1.96 * sqrt(variance / i)
+  }
+  df |> head()
+
+  df2 <- data.frame(
+    time = 1:n,
+    value = rnorm(n, 0, 1),
+    average = NA, theoretical_mean = 0,
+    type = "Normal",
+    lower = 0,
+    upper = 0
+  )
+  for (i in 1:n) {
+    df2$average[i] <- mean(df2$value[1:i])
+    variance <- var(df2$value[1:i])
+    df2$lower[i] <- mean(df2$value[1:i]) - 1.96 * sqrt(variance / i)
+    df2$upper[i] <- mean(df2$value[1:i]) + 1.96 * sqrt(variance / i)
+  }
+  df2 |> head()
+
+  # combine df1 and df2
+  big_df <- rbind(df, df2)
+  print(big_df |> head())
+  dummy2 <- data.frame(type = c(name, "Normal"), Z = c(mean_of_func, 0))
+
+  # Plot
+  x <- big_df |>
+    ggplot(aes(x = time, y = average)) +
+    geom_line() +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+      fill = "red", alpha = 0.2
+    ) +
+    geom_point() +
+    # scale_color_viridis(discrete = TRUE) +
+    ggtitle(paste("Draws from", name)) +
+    # theme_ipsum() +
+    ylab("Number of babies born") +
+    geom_hline(
+      data = dummy2, linetype = "dashed", color = "red",
+      aes(yintercept = Z)
+    ) +
+    # geom_hline(yintercept=4, linetype="dashed", color = "red") +
+    facet_wrap(~type, ncol = 1, scales = "free") +
+    transition_reveal(time)
+  # animate(x,
+  #   duration = 5, fps = 20, width = 400, height = 400,
+  #   renderer = gifski_renderer()
+  # )
+  # anim_save("output.gif")
+}
+```
+
+```{r}
+draw_lln_with_func_facet(400, mean_of_func = 2.5, rgamma, shape = 10, scale = 0.25)
+
+# draw_lln_with_func_facet(1000, mean_of_func = 0, rnorm, mean = 0, sd = 1)
+
+# draw_lln_with_func_facet(50000, mean_of_func = 0, rcauchy, scale = 1, location = 0)
+```
