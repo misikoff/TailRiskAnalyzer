@@ -82,7 +82,7 @@ draw_lln_with_func_facet <- function(
     gganimate::transition_reveal(.data$time)
   y <- gganimate::animate(x,
     duration = 5, fps = 20, width = 400, height = 400,
-    renderer = gifski_renderer::gifski_renderer()
+    renderer = gifski::gifski_renderer()
   )
   # anim_save("output.gif")
   return(y)
