@@ -8,13 +8,14 @@
 #' @param random_function The degrees of freedom for the t-distribution
 #' @param ... Additional arguments to pass to the random function
 #' @return a gif
+#'
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
 #' draw_lln_with_func_facet(400,
 #'   mean_of_func = 2.5, rgamma, shape = 10, scale = 0.25
 #' )
-#' @importFrom rlang .data
 draw_lln_with_func_facet <- function(
     n = 1000, mean_of_func,
     random_function, ...) {
@@ -80,8 +81,8 @@ draw_lln_with_func_facet <- function(
     ggplot2::facet_wrap(~ .data$type, ncol = 1, scales = "free") +
     gganimate::transition_reveal(.data$time)
   y <- gganimate::animate(x,
-    duration = 5, fps = 20, width = 400, height = 400
-    # , renderer = gifski_renderer()
+    duration = 5, fps = 20, width = 400, height = 400,
+    renderer = gifski_renderer::gifski_renderer()
   )
   # anim_save("output.gif")
   return(y)

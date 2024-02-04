@@ -12,6 +12,7 @@ RoxygenNote: 7.2.3
 Imports: 
     gganimate,
     ggplot2,
+    gifski,
     rlang,
     stats
 URL: https://misikoff.github.io/TailRiskAnalyzer/
