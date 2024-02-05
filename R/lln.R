@@ -19,9 +19,13 @@
 draw_lln_with_func_facet <- function(
     n = 1000, mean_of_func,
     random_function, ...) {
-  print(as.character(substitute(random_function)))
+  provided_function_name <- ifelse(is.call(random_function),
+    deparse(random_function[[1]]),
+    deparse(substitute(random_function))
+  )
+  print(provided_function_name)
+
   # build a dataframe of time, value and average
-  provided_function_name <- as.character(substitute(random_function))
   # iteratively populate the dataframe.
   #  the time will increase from 1 to n,
   #  the value will be a random draw from a normal (0,1)
@@ -36,8 +40,9 @@ draw_lln_with_func_facet <- function(
   for (i in 1:n) {
     df$average[i] <- mean(df$value[1:i])
     variance <- stats::var(df$value[1:i])
-    df$lower[i] <- mean(df$value[1:i]) - 1.96 * sqrt(variance / i)
-    df$upper[i] <- mean(df$value[1:i]) + 1.96 * sqrt(variance / i)
+    interval <- 1.96 * sqrt(variance / i)
+    df$lower[i] <- mean(df$value[1:i]) - interval
+    df$upper[i] <- mean(df$value[1:i]) + interval
   }
   # df |> head()
 
@@ -52,8 +57,9 @@ draw_lln_with_func_facet <- function(
   for (i in 1:n) {
     df2$average[i] <- mean(df2$value[1:i])
     variance <- stats::var(df2$value[1:i])
-    df2$lower[i] <- mean(df2$value[1:i]) - 1.96 * sqrt(variance / i)
-    df2$upper[i] <- mean(df2$value[1:i]) + 1.96 * sqrt(variance / i)
+    interval <- 1.96 * sqrt(variance / i)
+    df2$lower[i] <- mean(df2$value[1:i]) - interval
+    df2$upper[i] <- mean(df2$value[1:i]) + interval
   }
   # df2 |> head()
 
