@@ -8,7 +8,7 @@ with a given function compared to a normal distribution.}
 draw_lln_with_func_facet(
   animate = FALSE,
   n = 1000,
-  mean_of_func,
+  theoretical_mean,
   random_function,
   ...
 )
@@ -18,7 +18,7 @@ draw_lln_with_func_facet(
 
 \item{n}{The number of draws to be made}
 
-\item{mean_of_func}{The theoretical mean of the function}
+\item{theoretical_mean}{The theoretical mean of the function}
 
 \item{random_function}{The function from which samples are to be drawn}
 
@@ -34,22 +34,22 @@ with a given function compared to a normal distribution.
 \examples{
 draw_lln_with_func_facet(
   animate = FALSE, n = 400,
-  mean_of_func = 2.5, rgamma, shape = 10, scale = 0.25
+  theoretical_mean = 2.5, rgamma, shape = 10, scale = 0.25
 )
 draw_lln_with_func_facet(
   animate = FALSE, n = 400,
-  mean_of_func = 2.5, stats::rgamma, shape = 10, scale = 0.25
+  theoretical_mean = 2.5, stats::rgamma, shape = 10, scale = 0.25
 )
 draw_lln_with_func_facet(
   animate = FALSE, n = 200,
-  mean_of_func = 2.5, stats::rcauchy, location = 2.5, scale = 2
+  theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 )
 draw_lln_with_func_facet(
   animate = FALSE, n = 200,
-  mean_of_func = 2.5, stats::rcauchy, location = 2.5, scale = 2
+  theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 )
 draw_lln_with_func_facet(
   animate = TRUE, n = 200,
-  mean_of_func = 2.5, stats::rcauchy, location = 2.5, scale = 2
+  theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 )
 }

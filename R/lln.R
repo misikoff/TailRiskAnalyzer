@@ -3,7 +3,7 @@
 #'
 #' @param animate Whether the returned plot should animate the draws
 #' @param n The number of draws to be made
-#' @param mean_of_func The theoretical mean of the function
+#' @param theoretical_mean The theoretical mean of the function
 #' @param random_function The function from which samples are to be drawn
 #' @param ... Additional arguments to pass to the random function
 #' @return a plot or animated plot
@@ -14,27 +14,27 @@
 #' @examples
 #' draw_lln_with_func_facet(
 #'   animate = FALSE, n = 400,
-#'   mean_of_func = 2.5, rgamma, shape = 10, scale = 0.25
+#'   theoretical_mean = 2.5, rgamma, shape = 10, scale = 0.25
 #' )
 #' draw_lln_with_func_facet(
 #'   animate = FALSE, n = 400,
-#'   mean_of_func = 2.5, stats::rgamma, shape = 10, scale = 0.25
+#'   theoretical_mean = 2.5, stats::rgamma, shape = 10, scale = 0.25
 #' )
 #' draw_lln_with_func_facet(
 #'   animate = FALSE, n = 200,
-#'   mean_of_func = 2.5, stats::rcauchy, location = 2.5, scale = 2
+#'   theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 #' )
 #' draw_lln_with_func_facet(
 #'   animate = FALSE, n = 200,
-#'   mean_of_func = 2.5, stats::rcauchy, location = 2.5, scale = 2
+#'   theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 #' )
 #' draw_lln_with_func_facet(
 #'   animate = TRUE, n = 200,
-#'   mean_of_func = 2.5, stats::rcauchy, location = 2.5, scale = 2
+#'   theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 #' )
 draw_lln_with_func_facet <- function(
     animate = FALSE,
-    n = 1000, mean_of_func,
+    n = 1000, theoretical_mean,
     random_function, ...) {
   provided_function_name <- ifelse(is.call(random_function),
     deparse(random_function[[1]]),
@@ -51,7 +51,7 @@ draw_lln_with_func_facet <- function(
   df <- data.frame(
     draw = 1:n,
     value = random_function(n, ...),
-    average = NA, theoretical_mean = mean_of_func,
+    average = NA, mean = theoretical_mean,
     type = provided_function_name, lower = 0, upper = 0
   )
   for (i in 1:n) {
@@ -66,8 +66,8 @@ draw_lln_with_func_facet <- function(
   df2 <- data.frame(
     draw = 1:n,
     value = stats::rnorm(n, 0, 1),
-    average = NA, theoretical_mean = 0,
-    type = "Normal",
+    average = NA, mean = 0,
+    type = "Normal(0, 1)",
     lower = 0,
     upper = 0
   )
@@ -86,7 +86,7 @@ draw_lln_with_func_facet <- function(
 
   dummy2 <- data.frame(
     type = c(provided_function_name, "Normal"),
-    Z = c(mean_of_func, 0)
+    Z = c(theoretical_mean, 0)
   )
 
   # Plot
@@ -94,7 +94,7 @@ draw_lln_with_func_facet <- function(
     ggplot2::ggplot(ggplot2::aes(x = .data$draw, y = .data$average)) +
     ggplot2::geom_line() +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$lower, ymax = .data$upper),
-      fill = "red", alpha = 0.2
+      fill = "blue", alpha = 0.2
     ) +
     # scale_color_viridis(discrete = TRUE) +
     ggplot2::ggtitle(paste("Draws from", provided_function_name)) +
