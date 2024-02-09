@@ -57,7 +57,7 @@ with a given function compared to a normal distribution.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">draw_lln_with_func_facet</span><span class="op">(</span></span>
 <span>  animate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  <span class="va">mean_of_func</span>,</span>
+<span>  <span class="va">theoretical_mean</span>,</span>
 <span>  <span class="va">random_function</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -73,7 +73,7 @@ with a given function compared to a normal distribution.</p>
 <dd><p>The number of draws to be made</p></dd>
 
 
-<dt>mean_of_func</dt>
+<dt>theoretical_mean</dt>
 <dd><p>The theoretical mean of the function</p></dd>
 
 
@@ -96,27 +96,27 @@ with a given function compared to a normal distribution.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">draw_lln_with_func_facet</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  animate <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">400</span>,</span></span>
-<span class="r-in"><span>  mean_of_func <span class="op">=</span> <span class="fl">2.5</span>, <span class="va">rgamma</span>, shape <span class="op">=</span> <span class="fl">10</span>, scale <span class="op">=</span> <span class="fl">0.25</span></span></span>
+<span class="r-in"><span>  theoretical_mean <span class="op">=</span> <span class="fl">2.5</span>, <span class="va">rgamma</span>, shape <span class="op">=</span> <span class="fl">10</span>, scale <span class="op">=</span> <span class="fl">0.25</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="draw_lln_with_func_facet-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">draw_lln_with_func_facet</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  animate <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">400</span>,</span></span>
-<span class="r-in"><span>  mean_of_func <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">rgamma</a></span>, shape <span class="op">=</span> <span class="fl">10</span>, scale <span class="op">=</span> <span class="fl">0.25</span></span></span>
+<span class="r-in"><span>  theoretical_mean <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">rgamma</a></span>, shape <span class="op">=</span> <span class="fl">10</span>, scale <span class="op">=</span> <span class="fl">0.25</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="draw_lln_with_func_facet-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">draw_lln_with_func_facet</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  animate <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">200</span>,</span></span>
-<span class="r-in"><span>  mean_of_func <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span>, location <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span>  theoretical_mean <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span>, location <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="draw_lln_with_func_facet-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">draw_lln_with_func_facet</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  animate <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">200</span>,</span></span>
-<span class="r-in"><span>  mean_of_func <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span>, location <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span>  theoretical_mean <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span>, location <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="draw_lln_with_func_facet-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">draw_lln_with_func_facet</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  animate <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">200</span>,</span></span>
-<span class="r-in"><span>  mean_of_func <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span>, location <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span>  theoretical_mean <span class="op">=</span> <span class="fl">2.5</span>, <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span>, location <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_line()`: Each group consists of only one observation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span>
@@ -262,107 +262,107 @@ with a given function compared to a normal distribution.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 98     98     100     0.98         196</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 99     99     100     0.99         198</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100   100     100     1.00         200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                        frame_source</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0001.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0002.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0003.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0004.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0005.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0006.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0007.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0008.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0009.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0010.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0011.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0012.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0013.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0014.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0015.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0016.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0017.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0018.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0019.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0020.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0021.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0022.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0023.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0024.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0025.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0026.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0027.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0028.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0029.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0030.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0031.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0032.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0033.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0034.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0035.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0036.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0037.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0038.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0039.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0040.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0041.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0042.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0043.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0044.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0045.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0046.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0047.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0048.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0049.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0050.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0051.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0052.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0053.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0054.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0055.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0056.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0057.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0058.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0059.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0060.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0061.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0062.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0063.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0064.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0065.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0066.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0067.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0068.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0069.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0070.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0071.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0072.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0073.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0074.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0075.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0076.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0077.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0078.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0079.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0080.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0081.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0082.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0083.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0084.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0085.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0086.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 87  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0087.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0088.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0089.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0090.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 91  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0091.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 92  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0092.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0093.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 94  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0094.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0095.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 96  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0096.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 97  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0097.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 98  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0098.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 99  /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0099.png</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100 /tmp/Rtmp0OFhNI/18a6594e2c8/gganim_plot0100.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                         frame_source</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0001.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0002.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0003.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0004.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0005.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0006.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0007.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0008.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0009.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0010.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0011.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0012.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0013.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0014.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0015.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0016.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0017.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0018.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0019.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0020.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0021.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0022.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0023.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0024.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0025.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0026.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0027.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0028.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0029.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0030.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0031.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0032.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0033.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0034.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0035.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0036.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0037.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0038.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0039.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0040.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0041.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0042.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0043.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0044.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0045.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0046.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0047.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0048.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0049.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0050.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0051.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0052.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0053.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0054.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0055.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0056.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0057.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0058.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0059.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0060.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0061.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0062.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0063.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0064.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0065.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0066.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0067.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0068.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0069.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0070.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0071.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0072.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0073.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0074.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0075.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0076.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0077.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0078.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0079.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0080.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0081.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0082.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0083.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0084.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0085.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0086.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0087.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0088.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0089.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0090.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0091.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0092.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0093.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0094.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0095.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0096.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0097.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0098.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99  /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0099.png</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100 /tmp/RtmpmQ3Phf/17e7403dfd18/gganim_plot0100.png</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
