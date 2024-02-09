@@ -96,7 +96,6 @@ draw_lln_with_func_facet <- function(
     ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$lower, ymax = .data$upper),
       fill = "red", alpha = 0.2
     ) +
-    ggplot2::geom_point() +
     # scale_color_viridis(discrete = TRUE) +
     ggplot2::ggtitle(paste("Draws from", provided_function_name)) +
     # theme_ipsum() +
@@ -108,6 +107,7 @@ draw_lln_with_func_facet <- function(
     ggplot2::facet_wrap(~ .data$type, ncol = 1, scales = "free")
 
   if (animate) {
+    result <- result + ggplot2::geom_point()
     result <- result + gganimate::transition_reveal(.data$draw)
     result <- gganimate::animate(result,
       duration = 5, fps = 20, width = 400, height = 400
