@@ -63,11 +63,12 @@ draw_lln_with_func_facet <- function(
   }
   # df |> head()
 
+  reference_distribution_label <- "Normal(0,1)"
   df2 <- data.frame(
     draw = 1:n,
     value = stats::rnorm(n, 0, 1),
     average = NA, mean = 0,
-    type = "Normal(0, 1)",
+    type = reference_distribution_label,
     lower = 0,
     upper = 0
   )
@@ -85,7 +86,7 @@ draw_lln_with_func_facet <- function(
   # print(big_df |> head())
 
   dummy2 <- data.frame(
-    type = c(provided_function_name, "Normal"),
+    type = c(provided_function_name, reference_distribution_label),
     Z = c(theoretical_mean, 0)
   )
 
