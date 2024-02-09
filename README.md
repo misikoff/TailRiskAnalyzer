@@ -12,4 +12,4 @@ devtools::install_github("misikoff/TailRiskAnalyzer")
 
 
 <!-- embed output.gif from R directory -->
-![output](vignettes/output.gif)
+<!-- ![output](vignettes/output.gif) -->
