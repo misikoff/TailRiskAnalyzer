@@ -77,19 +77,106 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/p_normal_given_event.html">p_normal_given_event</a></span><span class="op">(</span><span class="fl">0.999</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1.545246e-18</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/draw_lln_with_func_facet.html">draw_lln_with_func_facet</a></span><span class="op">(</span><span class="fl">400</span>,</span>
-<span>  mean_of_func <span class="op">=</span> <span class="fl">2.5</span>, <span class="va">rgamma</span>, shape <span class="op">=</span> <span class="fl">10</span>, scale <span class="op">=</span> <span class="fl">0.25</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "rgamma"</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span></code></pre></div>
-<p><img src="../docs/articles/my-vignette_files/figure-html/unnamed-chunk-3-1.gif"><!-- --></p>
+<code class="sourceCode R"><span><span class="va">draw_lln_with_func_facet1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span> <span class="op">=</span> <span class="fl">1000</span>, <span class="va">mean_of_func</span>, <span class="va">func</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="va">provided_function_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/call.html" class="external-link">is.call</a></span><span class="op">(</span><span class="va">func</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="va">func</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">func</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">provided_function_name</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span>  <span class="co"># build a dataframe of time, value and average</span></span>
+<span>  <span class="co"># iteratively populate the dataframe.</span></span>
+<span>  <span class="co">#  the time will increase from 1 to n,</span></span>
+<span>  <span class="co">#  the value will be a random draw from a normal (0,1)</span></span>
+<span>  <span class="co"># and the average will be the</span></span>
+<span>  <span class="co"># average of the elements from 1 to the current time</span></span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    time <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span>,</span>
+<span>    value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">...</span><span class="op">)</span>, <span class="co"># func(n, ...),</span></span>
+<span>    average <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    theoretical_mean <span class="op">=</span> <span class="va">mean_of_func</span>,</span>
+<span>    type <span class="op">=</span> <span class="va">provided_function_name</span>,</span>
+<span>    lower <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    upper <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"blue"</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">average</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">variance</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">interval</span> <span class="op">&lt;-</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">variance</span> <span class="op">/</span> <span class="va">i</span><span class="op">)</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">lower</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="va">interval</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">upper</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="va">interval</span></span>
+<span>    <span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">average</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&gt;</span> <span class="va">mean_of_func</span>, <span class="st">"green"</span>, <span class="st">"red"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="co"># df |&gt; head()</span></span>
+<span></span>
+<span>  <span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    time <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span>,</span>
+<span>    value <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    average <span class="op">=</span> <span class="cn">NA</span>, theoretical_mean <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    type <span class="op">=</span> <span class="st">"Normal"</span>,</span>
+<span>    lower <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    upper <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"blue"</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">df2</span><span class="op">$</span><span class="va">average</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">variance</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">interval</span> <span class="op">&lt;-</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">variance</span> <span class="op">/</span> <span class="va">i</span><span class="op">)</span></span>
+<span>    <span class="va">df2</span><span class="op">$</span><span class="va">lower</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="va">interval</span></span>
+<span>    <span class="va">df2</span><span class="op">$</span><span class="va">upper</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="va">interval</span></span>
+<span>    <span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">average</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&gt;</span> <span class="va">mean_of_func</span>, <span class="st">"green"</span>, <span class="st">"red"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="co"># df2 |&gt; head()</span></span>
+<span></span>
+<span>  <span class="co"># combine df1 and df2</span></span>
+<span>  <span class="va">big_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span></span>
+<span>  <span class="co"># print(big_df |&gt; head())</span></span>
+<span>  <span class="va">dummy2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">provided_function_name</span>, <span class="st">"Normal"</span><span class="op">)</span>, Z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mean_of_func</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Plot</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">big_df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">time</span>, y <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">average</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span></span>
+<span>      <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>        ymin <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">lower</span>,</span>
+<span>        ymax <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">upper</span>,</span>
+<span>        fill <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">lower</span> <span class="op">&lt;=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">.data</span><span class="op">$</span><span class="va">upper</span> <span class="op">&gt;=</span> <span class="fl">0</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      color <span class="op">=</span> <span class="cn">NA</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>,</span>
+<span>      alpha <span class="op">=</span> <span class="fl">0.2</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"within 95% CI"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="co"># ggplot2::geom_point() +</span></span>
+<span>    <span class="co"># scale_color_viridis(discrete = TRUE) +</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Draws from"</span>, <span class="va">provided_function_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="co"># theme_ipsum() +</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Number of babies born"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span></span>
+<span>      data <span class="op">=</span> <span class="va">dummy2</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>      <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">Z</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.data</span><span class="op">$</span><span class="va">type</span>, ncol <span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">draw_lln_with_func_facet1</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean_of_func <span class="op">=</span> <span class="fl">0</span>, func <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10</span></span>
+<span><span class="co">#&gt; [1] "stats::rnorm"</span></span>
+<span><span class="co">#&gt; Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning</span></span>
+<span><span class="co">#&gt; -Inf</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning</span></span>
+<span><span class="co">#&gt; -Inf</span></span></code></pre></div>
+<p><img src="my-vignette_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># make a simple plot in base r</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<p><img src="my-vignette_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
   </main>
 </div>
 
