@@ -25,7 +25,7 @@ p_normal_given_event(0.999, 10, 2)
 ```
 
 ```{r}
-draw_lln_with_func_facet1 <- function(n = 1000, mean_of_func, func, ...) {
+draw_lln_with_func_facet1 <- function(n = 1000, theoretical_mean, func, ...) {
   print(n)
   provided_function_name <- ifelse(
     is.call(func), deparse(func[[1]]),
@@ -45,7 +45,7 @@ draw_lln_with_func_facet1 <- function(n = 1000, mean_of_func, func, ...) {
     time = 1:n,
     value = rnorm(n, ...), # func(n, ...),
     average = NA,
-    theoretical_mean = mean_of_func,
+    theoretical_mean = theoretical_mean,
     type = provided_function_name,
     lower = 0,
     upper = 0,
@@ -57,7 +57,7 @@ draw_lln_with_func_facet1 <- function(n = 1000, mean_of_func, func, ...) {
     interval <- 1.96 * sqrt(variance / i)
     df$lower[i] <- mean(df$value[1:i]) - interval
     df$upper[i] <- mean(df$value[1:i]) + interval
-    color <- ifelse(df$average[i] > mean_of_func, "green", "red")
+    color <- ifelse(df$average[i] > theoretical_mean, "green", "red")
   }
   # df |> head()
 
@@ -76,14 +76,14 @@ draw_lln_with_func_facet1 <- function(n = 1000, mean_of_func, func, ...) {
     interval <- 1.96 * sqrt(variance / i)
     df2$lower[i] <- mean(df2$value[1:i]) - interval
     df2$upper[i] <- mean(df2$value[1:i]) + interval
-    color <- ifelse(df$average[i] > mean_of_func, "green", "red")
+    color <- ifelse(df$average[i] > theoretical_mean, "green", "red")
   }
   # df2 |> head()
 
   # combine df1 and df2
   big_df <- rbind(df, df2)
   # print(big_df |> head())
-  dummy2 <- data.frame(type = c(provided_function_name, "Normal"), Z = c(mean_of_func, 0))
+  dummy2 <- data.frame(type = c(provided_function_name, "Normal"), Z = c(theoretical_mean, 0))
 
   # Plot
   x <- big_df |>
@@ -112,10 +112,17 @@ draw_lln_with_func_facet1 <- function(n = 1000, mean_of_func, func, ...) {
   return(x)
 }
 
-draw_lln_with_func_facet1(n = 10, mean_of_func = 0, func = stats::rnorm, mean = 0, sd = 2)
+draw_lln_with_func_facet1(n = 10, theoretical_mean = 0, func = stats::rnorm, mean = 0, sd = 2)
 ```
 
 ```{r}
 # make a simple plot in base r
 plot(1:10, 1:10)
+```
+
+```{r}
+draw_lln_with_func_facet(
+  animate = TRUE, 200, theoretical_mean = 2.5,
+  stats::rcauchy, location = 2.5, scale = 2
+)
 ```
