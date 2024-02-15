@@ -1,6 +1,9 @@
 url: https://misikoff.github.io/TailRiskAnalyzer/
 template:
   bootstrap: 5
+  bootswatch: simplex
+  bslib:
+    pkgdown-nav-height: 100px
 development:
   mode: auto
 
