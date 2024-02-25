@@ -57,7 +57,8 @@ draw_lln_with_func_facet1 <- function(n = 1000, theoretical_mean, func, ...) {
     interval <- 1.96 * sqrt(variance / i)
     df$lower[i] <- mean(df$value[1:i]) - interval
     df$upper[i] <- mean(df$value[1:i]) + interval
-    color <- ifelse(df$average[i] > theoretical_mean, "green", "red")
+    # color <- ifelse(df$average[i] > theoretical_mean,
+    #  "green", "red")
   }
   # df |> head()
 
@@ -83,7 +84,10 @@ draw_lln_with_func_facet1 <- function(n = 1000, theoretical_mean, func, ...) {
   # combine df1 and df2
   big_df <- rbind(df, df2)
   # print(big_df |> head())
-  dummy2 <- data.frame(type = c(provided_function_name, "Normal"), Z = c(theoretical_mean, 0))
+  dummy2 <- data.frame(
+    type = c(provided_function_name, "Normal"),
+    Z = c(theoretical_mean, 0)
+  )
 
   # Plot
   x <- big_df |>
@@ -98,7 +102,10 @@ draw_lln_with_func_facet1 <- function(n = 1000, theoretical_mean, func, ...) {
       color = NA, linetype = "dashed",
       alpha = 0.2
     ) +
-    ggplot2::scale_fill_manual(values = c("red", "blue"), name = "within 95% CI") +
+    ggplot2::scale_fill_manual(
+      values = c("red", "blue"),
+      name = "within 95% CI"
+    ) +
     # ggplot2::geom_point() +
     # scale_color_viridis(discrete = TRUE) +
     ggplot2::ggtitle(paste("Draws from", provided_function_name)) +
@@ -112,7 +119,10 @@ draw_lln_with_func_facet1 <- function(n = 1000, theoretical_mean, func, ...) {
   return(x)
 }
 
-draw_lln_with_func_facet1(n = 10, theoretical_mean = 0, func = stats::rnorm, mean = 0, sd = 2)
+draw_lln_with_func_facet1(
+  n = 10, theoretical_mean = 0,
+  func = stats::rnorm, mean = 0, sd = 2
+)
 ```
 
 ```{r}
@@ -122,7 +132,8 @@ plot(1:10, 1:10)
 
 ```{r}
 draw_lln_with_func_facet(
-  animate = TRUE, 200, theoretical_mean = 2.5,
-  stats::rcauchy, location = 2.5, scale = 2
+  animate = FALSE,
+  200, theoretical_mean = 2.5,
+  random_function = stats::rcauchy, location = 2.5, scale = 2
 )
 ```

@@ -14,8 +14,9 @@ Imports:
     ggplot2,
     rlang,
     stats
-URL: https://misikoff.github.io/TailRiskAnalyzer/
+URL: https://misikoff.github.io/TailRiskAnalyzer/, https://github.com/misikoff/TailRiskAnalyzer
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+

@@ -4,7 +4,7 @@
 #' @param a The fraction that is gained in a positive outcome.
 #' @param b The fraction that is lost in a negative outcome.
 #'
-#' @return A probability
+#' @return A proportion
 #' @export
 #'
 #' @examples
