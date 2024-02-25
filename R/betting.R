@@ -20,5 +20,5 @@ get_kelly_bet <- function(p = 0.5, a = 1, b = 1) {
     stop("b must be greater than 0")
   }
 
-  return(p * a - (1 - p) * b)
+  return((p / a) - ((1 - p) / b))
 }
