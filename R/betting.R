@@ -1,8 +1,8 @@
 #' Get the optimal fraction of your bankroll to bet based on the Kelly Criterion
 #'
 #' @param p The probability of a positive outcome
-#' @param a The fraction that is gained in a positive outcome.
-#' @param b The fraction that is lost in a negative outcome.
+#' @param a The fraction that is lost in a negative outcome.
+#' @param b The fraction that is gained in a positive outcome.
 #'
 #' @return A proportion
 #' @export

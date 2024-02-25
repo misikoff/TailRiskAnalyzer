@@ -9,12 +9,12 @@ get_kelly_bet(p = 0.5, a = 1, b = 1)
 \arguments{
 \item{p}{The probability of a positive outcome}
 
-\item{a}{The fraction that is gained in a positive outcome.}
+\item{a}{The fraction that is lost in a negative outcome.}
 
-\item{b}{The fraction that is lost in a negative outcome.}
+\item{b}{The fraction that is gained in a positive outcome.}
 }
 \value{
-A probability
+A proportion
 }
 \description{
 Get the optimal fraction of your bankroll to bet based on the Kelly Criterion
