@@ -48,8 +48,4 @@ draw_lln_with_func_facet(
   animate = FALSE, n = 200,
   theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 )
-draw_lln_with_func_facet(
-  animate = TRUE, n = 200,
-  theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
-)
 }
