@@ -92,7 +92,7 @@ draw_lln_with_func_facet <- function(
 
   # Plot
   result <- big_df |>
-    ggplot2::ggplot(ggplot2::aes(x = .data$draw, y = .data$average)) +
+    ggplot2::ggplot(ggplot2::aes(x = .data$draw, y = .data$average, group = 1)) +
     ggplot2::geom_line() +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$lower, ymax = .data$upper),
       fill = "blue", alpha = 0.2
