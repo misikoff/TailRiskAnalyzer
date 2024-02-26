@@ -28,10 +28,6 @@
 #'   animate = FALSE, n = 200,
 #'   theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
 #' )
-#' draw_lln_with_func_facet(
-#'   animate = TRUE, n = 200,
-#'   theoretical_mean = 2.5, stats::rcauchy, location = 2.5, scale = 2
-#' )
 draw_lln_with_func_facet <- function(
     animate = FALSE,
     n = 1000, theoretical_mean,
@@ -92,7 +88,7 @@ draw_lln_with_func_facet <- function(
 
   # Plot
   result <- big_df |>
-    ggplot2::ggplot(ggplot2::aes(x = .data$draw, y = .data$average, group = 1)) +
+    ggplot2::ggplot(ggplot2::aes(x = .data$draw, y = .data$average)) +
     ggplot2::geom_line() +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$lower, ymax = .data$upper),
       fill = "blue", alpha = 0.2

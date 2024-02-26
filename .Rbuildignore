@@ -7,6 +7,5 @@
 ^docs$
 ^pkgdown$
 
-^\readme_assets$
-
 ^workbench$
+^readme.html$
