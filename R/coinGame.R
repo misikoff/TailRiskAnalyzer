@@ -124,8 +124,9 @@ calc_score <- function(
     stop("betting_fraction must be between 0 and 1")
   }
 
-  results <- c(starting_capital)
+  expected_num_values <- length(toss_results) + 1
 
+  results <- c(starting_capital)
   for (res in toss_results) {
     current_funds <- results[length(results)]
     new_bet <- current_funds * betting_fraction
@@ -135,10 +136,10 @@ calc_score <- function(
 
     if (payout_is_maxed || bet_is_too_small) {
       # fill in the rest with current value
-      if (length(results) < length(toss_results)) {
+      if (length(results) < expected_num_values) {
         results <- c(results, rep(
           results[length(results)],
-          length(toss_results) - length(results)
+          expected_num_values - length(results)
         ))
       }
 
