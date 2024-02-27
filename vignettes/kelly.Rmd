@@ -16,99 +16,11 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(TailRiskAnalyzer)
-library(dplyr)
 library(ggplot2)
-library(egg)
 library(dplyr)
-# library(tidyverse)
-library(ggplot2)
 ```
 
 ```{r}
-# get_multi_time_series <- function(num_lines, length) {
-#   results <- c()
-#   for (i in 1:num_lines) {
-#     results <- c(results, cumsum(rnorm(length)))
-#   }
-#   return(results)
-# }
-
-# n <- 400
-# num_lines <- 1000
-# df <- data.frame(
-#   x = rep(1:n, num_lines),
-#   y = get_multi_time_series(num_lines, n),
-#   entry = as.integer(rep(1:num_lines, each = n))
-# )
-
-# sbs_plot <- function(df, use_log = TRUE) {
-#   # handle use_log
-#   # handle different column names
-#   time_series_plot <- df |> ggplot(
-#     aes(x = round, y = log(value), color = index, group = index)
-#   ) +
-#     geom_line(alpha = 0.1) +
-#     theme(
-#       legend.position = "none",
-#       panel.background = element_blank(),
-#       panel.grid.major = element_blank(),
-#       panel.grid.minor = element_blank(),
-#       plot.margin = margin(0, -0.7, 0, 0, "cm")
-#     )
-
-#   hist_plot <- df |>
-#     group_by(index) |>
-#     summarise(last_value = last(value)) |>
-#     ggplot(aes(log(last_value))) +
-#     geom_histogram(binwidth = 0.5, fill = "blue", color = "black") +
-#     # geom_line(stat = "density", color = "blue") +
-#     # move y axis to the right
-#     # scale_x_continuous(position = "left") +
-#     # remove background and gridlines
-#     theme(
-#       legend.position = "none",
-#       # panel.background = element_blank(),
-#       panel.grid.major = element_blank(),
-#       panel.grid.minor = element_blank(),
-#       # axis.line = element_line(color = "black"),
-#       # panel.border = element_rect(
-#       #   colour = "black", fill = NA, linewidth = 5
-#       # ),
-#       # plot.margin = margin(0, 0, 0, 0, "cm")
-#     ) +
-#     xlab(NULL) +
-#     scale_x_continuous(breaks = NULL) +
-#     ylab(NULL) +
-#     scale_y_continuous(breaks = NULL) +
-#     # move x axis label to top
-#     # theme(axis.title.x = element_text(margin = margin(t = 10))) +
-#     coord_flip()
-
-#   # show hist plot next to time series plot with 1 row of 2 cols
-#   ggarrange(time_series_plot, hist_plot,
-#     ncol = 2, nrow = 1,
-#     widths = c(2, 1),
-#     labels = c("Individual Outcomes", "Density of Outcomes")
-#   )
-# }
-
-
-# plot the moving average
-
-# xlab(NULL) +
-# ylab(NULL)
-# remove x ticks and labels
-# scale_x_continuous(breaks = NULL)
-
-# plot histogram of last value of each timeseries in df
-```
-
-```{r}
-# hmm <- coin_toss_seq(10)
-# print(hmm$results)
-# print(hmm$toss_results)
-# print(hmm$payout)
-
 # create empty dataframe with 2 columns, index, and value
 df <- data.frame(
   index = integer(),
@@ -130,85 +42,41 @@ get_kelly_bet(0.5, 0.5, 2)
 # df |> ggplot(aes(round, value, color = index, group = index)) +
 # geom_line(alpha = 0.8)
 
-# sbs_plot(df)
+create_side_by_side_plot(df)
+```
+
+# Theoretical Distribution, based on all possible outcomes
+
+```{r}
+toss_result_list <- generate_coin_sequences(8)
+toss_result_list
+
+df <- data.frame(
+  index = integer(),
+  round = integer(),
+  value = double()
+)
+
+# iterate over rows of toss_result_list
+for (i in seq(from = 1, to = nrow(toss_result_list))) {
+  print(i)
+  cur_run <- calc_score(toss_result_list[i, ],
+    min_bet = 1, betting_fraction = 0.75
+  )
+  for (round in seq_along(cur_run)) {
+    value <- cur_run[round]
+    df <- df |> add_row(index = i, round = round, value = value)
+  }
+}
+
 create_side_by_side_plot(df)
 ```
 
 ```{r}
-toss_result_list <- generate_coin_sequences(2)
-toss_result_list
-
-# iterate over rows of toss_result_list
-```
-
-```{r}
-#  +
-# theme(
-#   legend.position = "none",
-#   panel.background = element_blank(),
-#   panel.grid.major = element_blank(),
-#   panel.grid.minor = element_blank(),
-#   plot.margin = margin(0, -0.7, 0, 0, "cm")
+# calc_score(toss_result_list,
+#   min_bet = 1, betting_fraction = 0.75
 # )
 ```
 
 
-```{r}
-# lots_of_results <- c()
-# for (i in 0:50) {
-#   res <- coin_toss_seq(50, betting_fraction = 0.75, max_payout = 300)
-#   print(res$payout)
-#   lots_of_results <- c(lots_of_results, res$payout)
-# }
-# # lots_of_results
-# hist(lots_of_results, breaks = seq(0, 300, 10))
-# # hist(c(1, 1, 2, 1))
 
-# # get_kelly_bet(0.5, 2, 0.5)
-
-# median(c(1, 1, 5, 20))
-```
-
-```{r}
-# df <- data.frame(
-#   betting_fraction = c(0),
-#   median_payout = c(0)
-# )
-
-# num_samples <- 10000
-# for (frac in seq(0, 1, 0.05)) {
-#   lots_of_results <- c()
-#   for (j in 1:num_samples) {
-#     res <- coin_toss_seq(100, betting_fraction = frac, heads_prob = 0.5, max_payout = 10000)
-#     # print(res$payout)
-#     lots_of_results <- c(lots_of_results, res$payout)
-#   }
-#   # print(median(lots_of_results))
-#   hist(lots_of_results, main = paste("betting fraction", frac))
-#   df <- df |> add_row(betting_fraction = frac, median_payout = median(lots_of_results))
-# }
-# df |> ggplot(aes(x = betting_fraction, y = median_payout)) +
-#   geom_point()
-# # for each
-```
-
-
-```{r}
-# generate_coin_sequences <- function(num_flips) {
-#   outcomes <- c(0, 1)
-#   sequences <- as.matrix(
-#     expand.grid(replicate(num_flips, outcomes, simplify = FALSE))
-#   )
-#   return(sequences)
-# }
-
-# # Set the number of coin flips
-# num_flips <- 3
-
-# # Generate sequences
-# coin_sequences <- generate_coin_sequences(num_flips)
-
-# # Display the result
-# print(coin_sequences)
-# print(as.vector(coin_sequences[1, ]))
-```
