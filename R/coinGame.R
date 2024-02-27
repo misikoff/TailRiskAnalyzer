@@ -134,9 +134,16 @@ calc_score <- function(
     bet_is_too_small <- new_bet < min_bet
 
     if (payout_is_maxed || bet_is_too_small) {
+      # fill in the rest with current value
+      if (length(results) < length(toss_results)) {
+        results <- c(results, rep(
+          results[length(results)],
+          length(toss_results) - length(results)
+        ))
+      }
+
       break
     }
-    # maybe need to fill in the rest with current value
 
     reserve <- current_funds - new_bet
 
