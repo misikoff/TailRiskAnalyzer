@@ -59,7 +59,7 @@ coin_toss_seq <- function(
 #' toss results (list of coin toss results), and payout (integer)
 #' @export
 #' @examples
-#' coin_toss(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+#' get_coin_game_results(0:1, 100, 2, 0.5, 1, 1000, 0.5)
 get_coin_game_results <- function(
     toss_results,
     starting_capital = 100,
