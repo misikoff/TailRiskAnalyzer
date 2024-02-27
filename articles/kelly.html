@@ -79,6 +79,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://misikoff.github.io/TailRiskAnalyzer/">TailRiskAnalyzer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -87,102 +88,9 @@
 <span><span class="co">#&gt;     filter, lag</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">egg</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: gridExtra</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'gridExtra'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:dplyr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     combine</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co"># library(tidyverse)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># get_multi_time_series &lt;- function(num_lines, length) {</span></span>
-<span><span class="co">#   results &lt;- c()</span></span>
-<span><span class="co">#   for (i in 1:num_lines) {</span></span>
-<span><span class="co">#     results &lt;- c(results, cumsum(rnorm(length)))</span></span>
-<span><span class="co">#   }</span></span>
-<span><span class="co">#   return(results)</span></span>
-<span><span class="co"># }</span></span>
-<span></span>
-<span><span class="co"># n &lt;- 400</span></span>
-<span><span class="co"># num_lines &lt;- 1000</span></span>
-<span><span class="co"># df &lt;- data.frame(</span></span>
-<span><span class="co">#   x = rep(1:n, num_lines),</span></span>
-<span><span class="co">#   y = get_multi_time_series(num_lines, n),</span></span>
-<span><span class="co">#   entry = as.integer(rep(1:num_lines, each = n))</span></span>
-<span><span class="co"># )</span></span>
-<span></span>
-<span><span class="co"># sbs_plot &lt;- function(df, use_log = TRUE) {</span></span>
-<span><span class="co">#   # handle use_log</span></span>
-<span><span class="co">#   # handle different column names</span></span>
-<span><span class="co">#   time_series_plot &lt;- df |&gt; ggplot(</span></span>
-<span><span class="co">#     aes(x = round, y = log(value), color = index, group = index)</span></span>
-<span><span class="co">#   ) +</span></span>
-<span><span class="co">#     geom_line(alpha = 0.1) +</span></span>
-<span><span class="co">#     theme(</span></span>
-<span><span class="co">#       legend.position = "none",</span></span>
-<span><span class="co">#       panel.background = element_blank(),</span></span>
-<span><span class="co">#       panel.grid.major = element_blank(),</span></span>
-<span><span class="co">#       panel.grid.minor = element_blank(),</span></span>
-<span><span class="co">#       plot.margin = margin(0, -0.7, 0, 0, "cm")</span></span>
-<span><span class="co">#     )</span></span>
-<span></span>
-<span><span class="co">#   hist_plot &lt;- df |&gt;</span></span>
-<span><span class="co">#     group_by(index) |&gt;</span></span>
-<span><span class="co">#     summarise(last_value = last(value)) |&gt;</span></span>
-<span><span class="co">#     ggplot(aes(log(last_value))) +</span></span>
-<span><span class="co">#     geom_histogram(binwidth = 0.5, fill = "blue", color = "black") +</span></span>
-<span><span class="co">#     # geom_line(stat = "density", color = "blue") +</span></span>
-<span><span class="co">#     # move y axis to the right</span></span>
-<span><span class="co">#     # scale_x_continuous(position = "left") +</span></span>
-<span><span class="co">#     # remove background and gridlines</span></span>
-<span><span class="co">#     theme(</span></span>
-<span><span class="co">#       legend.position = "none",</span></span>
-<span><span class="co">#       # panel.background = element_blank(),</span></span>
-<span><span class="co">#       panel.grid.major = element_blank(),</span></span>
-<span><span class="co">#       panel.grid.minor = element_blank(),</span></span>
-<span><span class="co">#       # axis.line = element_line(color = "black"),</span></span>
-<span><span class="co">#       # panel.border = element_rect(</span></span>
-<span><span class="co">#       #   colour = "black", fill = NA, linewidth = 5</span></span>
-<span><span class="co">#       # ),</span></span>
-<span><span class="co">#       # plot.margin = margin(0, 0, 0, 0, "cm")</span></span>
-<span><span class="co">#     ) +</span></span>
-<span><span class="co">#     xlab(NULL) +</span></span>
-<span><span class="co">#     scale_x_continuous(breaks = NULL) +</span></span>
-<span><span class="co">#     ylab(NULL) +</span></span>
-<span><span class="co">#     scale_y_continuous(breaks = NULL) +</span></span>
-<span><span class="co">#     # move x axis label to top</span></span>
-<span><span class="co">#     # theme(axis.title.x = element_text(margin = margin(t = 10))) +</span></span>
-<span><span class="co">#     coord_flip()</span></span>
-<span></span>
-<span><span class="co">#   # show hist plot next to time series plot with 1 row of 2 cols</span></span>
-<span><span class="co">#   ggarrange(time_series_plot, hist_plot,</span></span>
-<span><span class="co">#     ncol = 2, nrow = 1,</span></span>
-<span><span class="co">#     widths = c(2, 1),</span></span>
-<span><span class="co">#     labels = c("Individual Outcomes", "Density of Outcomes")</span></span>
-<span><span class="co">#   )</span></span>
-<span><span class="co"># }</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># plot the moving average</span></span>
-<span></span>
-<span><span class="co"># xlab(NULL) +</span></span>
-<span><span class="co"># ylab(NULL)</span></span>
-<span><span class="co"># remove x ticks and labels</span></span>
-<span><span class="co"># scale_x_continuous(breaks = NULL)</span></span>
-<span></span>
-<span><span class="co"># plot histogram of last value of each timeseries in df</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># hmm &lt;- coin_toss_seq(10)</span></span>
-<span><span class="co"># print(hmm$results)</span></span>
-<span><span class="co"># print(hmm$toss_results)</span></span>
-<span><span class="co"># print(hmm$payout)</span></span>
-<span></span>
-<span><span class="co"># create empty dataframe with 2 columns, index, and value</span></span>
+<code class="sourceCode R"><span><span class="co"># create empty dataframe with 2 columns, index, and value</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -204,81 +112,553 @@
 <span><span class="co"># df |&gt; ggplot(aes(round, value, color = index, group = index)) +</span></span>
 <span><span class="co"># geom_line(alpha = 0.8)</span></span>
 <span></span>
-<span><span class="co"># sbs_plot(df)</span></span>
+<span><span class="fu"><a href="../reference/create_side_by_side_plot.html">create_side_by_side_plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
+<p><img src="kelly_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="section level2">
+<h2 id="theoretical-distribution-based-on-all-possible-outcomes">Theoretical Distribution, based on all possible outcomes<a class="anchor" aria-label="anchor" href="#theoretical-distribution-based-on-all-possible-outcomes"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">toss_result_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_coin_sequences.html">generate_coin_sequences</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">toss_result_list</span></span>
+<span><span class="co">#&gt;        Var1 Var2 Var3 Var4 Var5 Var6 Var7 Var8</span></span>
+<span><span class="co">#&gt;   [1,]    0    0    0    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [2,]    1    0    0    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [3,]    0    1    0    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [4,]    1    1    0    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [5,]    0    0    1    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [6,]    1    0    1    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [7,]    0    1    1    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [8,]    1    1    1    0    0    0    0    0</span></span>
+<span><span class="co">#&gt;   [9,]    0    0    0    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [10,]    1    0    0    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [11,]    0    1    0    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [12,]    1    1    0    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [13,]    0    0    1    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [14,]    1    0    1    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [15,]    0    1    1    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [16,]    1    1    1    1    0    0    0    0</span></span>
+<span><span class="co">#&gt;  [17,]    0    0    0    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [18,]    1    0    0    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [19,]    0    1    0    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [20,]    1    1    0    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [21,]    0    0    1    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [22,]    1    0    1    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [23,]    0    1    1    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [24,]    1    1    1    0    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [25,]    0    0    0    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [26,]    1    0    0    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [27,]    0    1    0    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [28,]    1    1    0    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [29,]    0    0    1    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [30,]    1    0    1    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [31,]    0    1    1    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [32,]    1    1    1    1    1    0    0    0</span></span>
+<span><span class="co">#&gt;  [33,]    0    0    0    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [34,]    1    0    0    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [35,]    0    1    0    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [36,]    1    1    0    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [37,]    0    0    1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [38,]    1    0    1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [39,]    0    1    1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [40,]    1    1    1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [41,]    0    0    0    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [42,]    1    0    0    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [43,]    0    1    0    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [44,]    1    1    0    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [45,]    0    0    1    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [46,]    1    0    1    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [47,]    0    1    1    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [48,]    1    1    1    1    0    1    0    0</span></span>
+<span><span class="co">#&gt;  [49,]    0    0    0    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [50,]    1    0    0    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [51,]    0    1    0    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [52,]    1    1    0    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [53,]    0    0    1    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [54,]    1    0    1    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [55,]    0    1    1    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [56,]    1    1    1    0    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [57,]    0    0    0    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [58,]    1    0    0    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [59,]    0    1    0    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [60,]    1    1    0    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [61,]    0    0    1    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [62,]    1    0    1    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [63,]    0    1    1    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [64,]    1    1    1    1    1    1    0    0</span></span>
+<span><span class="co">#&gt;  [65,]    0    0    0    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [66,]    1    0    0    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [67,]    0    1    0    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [68,]    1    1    0    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [69,]    0    0    1    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [70,]    1    0    1    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [71,]    0    1    1    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [72,]    1    1    1    0    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [73,]    0    0    0    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [74,]    1    0    0    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [75,]    0    1    0    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [76,]    1    1    0    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [77,]    0    0    1    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [78,]    1    0    1    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [79,]    0    1    1    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [80,]    1    1    1    1    0    0    1    0</span></span>
+<span><span class="co">#&gt;  [81,]    0    0    0    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [82,]    1    0    0    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [83,]    0    1    0    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [84,]    1    1    0    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [85,]    0    0    1    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [86,]    1    0    1    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [87,]    0    1    1    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [88,]    1    1    1    0    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [89,]    0    0    0    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [90,]    1    0    0    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [91,]    0    1    0    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [92,]    1    1    0    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [93,]    0    0    1    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [94,]    1    0    1    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [95,]    0    1    1    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [96,]    1    1    1    1    1    0    1    0</span></span>
+<span><span class="co">#&gt;  [97,]    0    0    0    0    0    1    1    0</span></span>
+<span><span class="co">#&gt;  [98,]    1    0    0    0    0    1    1    0</span></span>
+<span><span class="co">#&gt;  [99,]    0    1    0    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; [100,]    1    1    0    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; [101,]    0    0    1    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; [102,]    1    0    1    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; [103,]    0    1    1    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; [104,]    1    1    1    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; [105,]    0    0    0    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [106,]    1    0    0    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [107,]    0    1    0    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [108,]    1    1    0    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [109,]    0    0    1    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [110,]    1    0    1    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [111,]    0    1    1    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [112,]    1    1    1    1    0    1    1    0</span></span>
+<span><span class="co">#&gt; [113,]    0    0    0    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [114,]    1    0    0    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [115,]    0    1    0    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [116,]    1    1    0    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [117,]    0    0    1    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [118,]    1    0    1    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [119,]    0    1    1    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [120,]    1    1    1    0    1    1    1    0</span></span>
+<span><span class="co">#&gt; [121,]    0    0    0    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [122,]    1    0    0    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [123,]    0    1    0    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [124,]    1    1    0    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [125,]    0    0    1    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [126,]    1    0    1    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [127,]    0    1    1    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [128,]    1    1    1    1    1    1    1    0</span></span>
+<span><span class="co">#&gt; [129,]    0    0    0    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [130,]    1    0    0    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [131,]    0    1    0    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [132,]    1    1    0    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [133,]    0    0    1    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [134,]    1    0    1    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [135,]    0    1    1    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [136,]    1    1    1    0    0    0    0    1</span></span>
+<span><span class="co">#&gt; [137,]    0    0    0    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [138,]    1    0    0    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [139,]    0    1    0    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [140,]    1    1    0    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [141,]    0    0    1    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [142,]    1    0    1    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [143,]    0    1    1    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [144,]    1    1    1    1    0    0    0    1</span></span>
+<span><span class="co">#&gt; [145,]    0    0    0    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [146,]    1    0    0    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [147,]    0    1    0    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [148,]    1    1    0    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [149,]    0    0    1    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [150,]    1    0    1    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [151,]    0    1    1    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [152,]    1    1    1    0    1    0    0    1</span></span>
+<span><span class="co">#&gt; [153,]    0    0    0    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [154,]    1    0    0    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [155,]    0    1    0    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [156,]    1    1    0    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [157,]    0    0    1    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [158,]    1    0    1    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [159,]    0    1    1    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [160,]    1    1    1    1    1    0    0    1</span></span>
+<span><span class="co">#&gt; [161,]    0    0    0    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [162,]    1    0    0    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [163,]    0    1    0    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [164,]    1    1    0    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [165,]    0    0    1    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [166,]    1    0    1    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [167,]    0    1    1    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [168,]    1    1    1    0    0    1    0    1</span></span>
+<span><span class="co">#&gt; [169,]    0    0    0    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [170,]    1    0    0    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [171,]    0    1    0    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [172,]    1    1    0    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [173,]    0    0    1    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [174,]    1    0    1    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [175,]    0    1    1    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [176,]    1    1    1    1    0    1    0    1</span></span>
+<span><span class="co">#&gt; [177,]    0    0    0    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [178,]    1    0    0    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [179,]    0    1    0    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [180,]    1    1    0    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [181,]    0    0    1    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [182,]    1    0    1    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [183,]    0    1    1    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [184,]    1    1    1    0    1    1    0    1</span></span>
+<span><span class="co">#&gt; [185,]    0    0    0    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [186,]    1    0    0    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [187,]    0    1    0    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [188,]    1    1    0    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [189,]    0    0    1    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [190,]    1    0    1    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [191,]    0    1    1    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [192,]    1    1    1    1    1    1    0    1</span></span>
+<span><span class="co">#&gt; [193,]    0    0    0    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [194,]    1    0    0    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [195,]    0    1    0    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [196,]    1    1    0    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [197,]    0    0    1    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [198,]    1    0    1    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [199,]    0    1    1    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [200,]    1    1    1    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; [201,]    0    0    0    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [202,]    1    0    0    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [203,]    0    1    0    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [204,]    1    1    0    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [205,]    0    0    1    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [206,]    1    0    1    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [207,]    0    1    1    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [208,]    1    1    1    1    0    0    1    1</span></span>
+<span><span class="co">#&gt; [209,]    0    0    0    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [210,]    1    0    0    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [211,]    0    1    0    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [212,]    1    1    0    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [213,]    0    0    1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [214,]    1    0    1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [215,]    0    1    1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [216,]    1    1    1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; [217,]    0    0    0    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [218,]    1    0    0    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [219,]    0    1    0    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [220,]    1    1    0    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [221,]    0    0    1    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [222,]    1    0    1    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [223,]    0    1    1    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [224,]    1    1    1    1    1    0    1    1</span></span>
+<span><span class="co">#&gt; [225,]    0    0    0    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [226,]    1    0    0    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [227,]    0    1    0    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [228,]    1    1    0    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [229,]    0    0    1    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [230,]    1    0    1    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [231,]    0    1    1    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [232,]    1    1    1    0    0    1    1    1</span></span>
+<span><span class="co">#&gt; [233,]    0    0    0    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [234,]    1    0    0    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [235,]    0    1    0    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [236,]    1    1    0    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [237,]    0    0    1    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [238,]    1    0    1    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [239,]    0    1    1    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [240,]    1    1    1    1    0    1    1    1</span></span>
+<span><span class="co">#&gt; [241,]    0    0    0    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [242,]    1    0    0    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [243,]    0    1    0    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [244,]    1    1    0    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [245,]    0    0    1    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [246,]    1    0    1    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [247,]    0    1    1    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [248,]    1    1    1    0    1    1    1    1</span></span>
+<span><span class="co">#&gt; [249,]    0    0    0    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [250,]    1    0    0    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [251,]    0    1    0    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [252,]    1    1    0    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [253,]    0    0    1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [254,]    1    0    1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [255,]    0    1    1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [256,]    1    1    1    1    1    1    1    1</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">double</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># iterate over rows of toss_result_list</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">toss_result_list</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
+<span>  <span class="va">cur_run</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calc_score.html">calc_score</a></span><span class="op">(</span><span class="va">toss_result_list</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>,</span>
+<span>    min_bet <span class="op">=</span> <span class="fl">1</span>, betting_fraction <span class="op">=</span> <span class="fl">0.75</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">round</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">cur_run</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">value</span> <span class="op">&lt;-</span> <span class="va">cur_run</span><span class="op">[</span><span class="va">round</span><span class="op">]</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html" class="external-link">add_row</a></span><span class="op">(</span>index <span class="op">=</span> <span class="va">i</span>, round <span class="op">=</span> <span class="va">round</span>, value <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; [1] 2</span></span>
+<span><span class="co">#&gt; [1] 3</span></span>
+<span><span class="co">#&gt; [1] 4</span></span>
+<span><span class="co">#&gt; [1] 5</span></span>
+<span><span class="co">#&gt; [1] 6</span></span>
+<span><span class="co">#&gt; [1] 7</span></span>
+<span><span class="co">#&gt; [1] 8</span></span>
+<span><span class="co">#&gt; [1] 9</span></span>
+<span><span class="co">#&gt; [1] 10</span></span>
+<span><span class="co">#&gt; [1] 11</span></span>
+<span><span class="co">#&gt; [1] 12</span></span>
+<span><span class="co">#&gt; [1] 13</span></span>
+<span><span class="co">#&gt; [1] 14</span></span>
+<span><span class="co">#&gt; [1] 15</span></span>
+<span><span class="co">#&gt; [1] 16</span></span>
+<span><span class="co">#&gt; [1] 17</span></span>
+<span><span class="co">#&gt; [1] 18</span></span>
+<span><span class="co">#&gt; [1] 19</span></span>
+<span><span class="co">#&gt; [1] 20</span></span>
+<span><span class="co">#&gt; [1] 21</span></span>
+<span><span class="co">#&gt; [1] 22</span></span>
+<span><span class="co">#&gt; [1] 23</span></span>
+<span><span class="co">#&gt; [1] 24</span></span>
+<span><span class="co">#&gt; [1] 25</span></span>
+<span><span class="co">#&gt; [1] 26</span></span>
+<span><span class="co">#&gt; [1] 27</span></span>
+<span><span class="co">#&gt; [1] 28</span></span>
+<span><span class="co">#&gt; [1] 29</span></span>
+<span><span class="co">#&gt; [1] 30</span></span>
+<span><span class="co">#&gt; [1] 31</span></span>
+<span><span class="co">#&gt; [1] 32</span></span>
+<span><span class="co">#&gt; [1] 33</span></span>
+<span><span class="co">#&gt; [1] 34</span></span>
+<span><span class="co">#&gt; [1] 35</span></span>
+<span><span class="co">#&gt; [1] 36</span></span>
+<span><span class="co">#&gt; [1] 37</span></span>
+<span><span class="co">#&gt; [1] 38</span></span>
+<span><span class="co">#&gt; [1] 39</span></span>
+<span><span class="co">#&gt; [1] 40</span></span>
+<span><span class="co">#&gt; [1] 41</span></span>
+<span><span class="co">#&gt; [1] 42</span></span>
+<span><span class="co">#&gt; [1] 43</span></span>
+<span><span class="co">#&gt; [1] 44</span></span>
+<span><span class="co">#&gt; [1] 45</span></span>
+<span><span class="co">#&gt; [1] 46</span></span>
+<span><span class="co">#&gt; [1] 47</span></span>
+<span><span class="co">#&gt; [1] 48</span></span>
+<span><span class="co">#&gt; [1] 49</span></span>
+<span><span class="co">#&gt; [1] 50</span></span>
+<span><span class="co">#&gt; [1] 51</span></span>
+<span><span class="co">#&gt; [1] 52</span></span>
+<span><span class="co">#&gt; [1] 53</span></span>
+<span><span class="co">#&gt; [1] 54</span></span>
+<span><span class="co">#&gt; [1] 55</span></span>
+<span><span class="co">#&gt; [1] 56</span></span>
+<span><span class="co">#&gt; [1] 57</span></span>
+<span><span class="co">#&gt; [1] 58</span></span>
+<span><span class="co">#&gt; [1] 59</span></span>
+<span><span class="co">#&gt; [1] 60</span></span>
+<span><span class="co">#&gt; [1] 61</span></span>
+<span><span class="co">#&gt; [1] 62</span></span>
+<span><span class="co">#&gt; [1] 63</span></span>
+<span><span class="co">#&gt; [1] 64</span></span>
+<span><span class="co">#&gt; [1] 65</span></span>
+<span><span class="co">#&gt; [1] 66</span></span>
+<span><span class="co">#&gt; [1] 67</span></span>
+<span><span class="co">#&gt; [1] 68</span></span>
+<span><span class="co">#&gt; [1] 69</span></span>
+<span><span class="co">#&gt; [1] 70</span></span>
+<span><span class="co">#&gt; [1] 71</span></span>
+<span><span class="co">#&gt; [1] 72</span></span>
+<span><span class="co">#&gt; [1] 73</span></span>
+<span><span class="co">#&gt; [1] 74</span></span>
+<span><span class="co">#&gt; [1] 75</span></span>
+<span><span class="co">#&gt; [1] 76</span></span>
+<span><span class="co">#&gt; [1] 77</span></span>
+<span><span class="co">#&gt; [1] 78</span></span>
+<span><span class="co">#&gt; [1] 79</span></span>
+<span><span class="co">#&gt; [1] 80</span></span>
+<span><span class="co">#&gt; [1] 81</span></span>
+<span><span class="co">#&gt; [1] 82</span></span>
+<span><span class="co">#&gt; [1] 83</span></span>
+<span><span class="co">#&gt; [1] 84</span></span>
+<span><span class="co">#&gt; [1] 85</span></span>
+<span><span class="co">#&gt; [1] 86</span></span>
+<span><span class="co">#&gt; [1] 87</span></span>
+<span><span class="co">#&gt; [1] 88</span></span>
+<span><span class="co">#&gt; [1] 89</span></span>
+<span><span class="co">#&gt; [1] 90</span></span>
+<span><span class="co">#&gt; [1] 91</span></span>
+<span><span class="co">#&gt; [1] 92</span></span>
+<span><span class="co">#&gt; [1] 93</span></span>
+<span><span class="co">#&gt; [1] 94</span></span>
+<span><span class="co">#&gt; [1] 95</span></span>
+<span><span class="co">#&gt; [1] 96</span></span>
+<span><span class="co">#&gt; [1] 97</span></span>
+<span><span class="co">#&gt; [1] 98</span></span>
+<span><span class="co">#&gt; [1] 99</span></span>
+<span><span class="co">#&gt; [1] 100</span></span>
+<span><span class="co">#&gt; [1] 101</span></span>
+<span><span class="co">#&gt; [1] 102</span></span>
+<span><span class="co">#&gt; [1] 103</span></span>
+<span><span class="co">#&gt; [1] 104</span></span>
+<span><span class="co">#&gt; [1] 105</span></span>
+<span><span class="co">#&gt; [1] 106</span></span>
+<span><span class="co">#&gt; [1] 107</span></span>
+<span><span class="co">#&gt; [1] 108</span></span>
+<span><span class="co">#&gt; [1] 109</span></span>
+<span><span class="co">#&gt; [1] 110</span></span>
+<span><span class="co">#&gt; [1] 111</span></span>
+<span><span class="co">#&gt; [1] 112</span></span>
+<span><span class="co">#&gt; [1] 113</span></span>
+<span><span class="co">#&gt; [1] 114</span></span>
+<span><span class="co">#&gt; [1] 115</span></span>
+<span><span class="co">#&gt; [1] 116</span></span>
+<span><span class="co">#&gt; [1] 117</span></span>
+<span><span class="co">#&gt; [1] 118</span></span>
+<span><span class="co">#&gt; [1] 119</span></span>
+<span><span class="co">#&gt; [1] 120</span></span>
+<span><span class="co">#&gt; [1] 121</span></span>
+<span><span class="co">#&gt; [1] 122</span></span>
+<span><span class="co">#&gt; [1] 123</span></span>
+<span><span class="co">#&gt; [1] 124</span></span>
+<span><span class="co">#&gt; [1] 125</span></span>
+<span><span class="co">#&gt; [1] 126</span></span>
+<span><span class="co">#&gt; [1] 127</span></span>
+<span><span class="co">#&gt; [1] 128</span></span>
+<span><span class="co">#&gt; [1] 129</span></span>
+<span><span class="co">#&gt; [1] 130</span></span>
+<span><span class="co">#&gt; [1] 131</span></span>
+<span><span class="co">#&gt; [1] 132</span></span>
+<span><span class="co">#&gt; [1] 133</span></span>
+<span><span class="co">#&gt; [1] 134</span></span>
+<span><span class="co">#&gt; [1] 135</span></span>
+<span><span class="co">#&gt; [1] 136</span></span>
+<span><span class="co">#&gt; [1] 137</span></span>
+<span><span class="co">#&gt; [1] 138</span></span>
+<span><span class="co">#&gt; [1] 139</span></span>
+<span><span class="co">#&gt; [1] 140</span></span>
+<span><span class="co">#&gt; [1] 141</span></span>
+<span><span class="co">#&gt; [1] 142</span></span>
+<span><span class="co">#&gt; [1] 143</span></span>
+<span><span class="co">#&gt; [1] 144</span></span>
+<span><span class="co">#&gt; [1] 145</span></span>
+<span><span class="co">#&gt; [1] 146</span></span>
+<span><span class="co">#&gt; [1] 147</span></span>
+<span><span class="co">#&gt; [1] 148</span></span>
+<span><span class="co">#&gt; [1] 149</span></span>
+<span><span class="co">#&gt; [1] 150</span></span>
+<span><span class="co">#&gt; [1] 151</span></span>
+<span><span class="co">#&gt; [1] 152</span></span>
+<span><span class="co">#&gt; [1] 153</span></span>
+<span><span class="co">#&gt; [1] 154</span></span>
+<span><span class="co">#&gt; [1] 155</span></span>
+<span><span class="co">#&gt; [1] 156</span></span>
+<span><span class="co">#&gt; [1] 157</span></span>
+<span><span class="co">#&gt; [1] 158</span></span>
+<span><span class="co">#&gt; [1] 159</span></span>
+<span><span class="co">#&gt; [1] 160</span></span>
+<span><span class="co">#&gt; [1] 161</span></span>
+<span><span class="co">#&gt; [1] 162</span></span>
+<span><span class="co">#&gt; [1] 163</span></span>
+<span><span class="co">#&gt; [1] 164</span></span>
+<span><span class="co">#&gt; [1] 165</span></span>
+<span><span class="co">#&gt; [1] 166</span></span>
+<span><span class="co">#&gt; [1] 167</span></span>
+<span><span class="co">#&gt; [1] 168</span></span>
+<span><span class="co">#&gt; [1] 169</span></span>
+<span><span class="co">#&gt; [1] 170</span></span>
+<span><span class="co">#&gt; [1] 171</span></span>
+<span><span class="co">#&gt; [1] 172</span></span>
+<span><span class="co">#&gt; [1] 173</span></span>
+<span><span class="co">#&gt; [1] 174</span></span>
+<span><span class="co">#&gt; [1] 175</span></span>
+<span><span class="co">#&gt; [1] 176</span></span>
+<span><span class="co">#&gt; [1] 177</span></span>
+<span><span class="co">#&gt; [1] 178</span></span>
+<span><span class="co">#&gt; [1] 179</span></span>
+<span><span class="co">#&gt; [1] 180</span></span>
+<span><span class="co">#&gt; [1] 181</span></span>
+<span><span class="co">#&gt; [1] 182</span></span>
+<span><span class="co">#&gt; [1] 183</span></span>
+<span><span class="co">#&gt; [1] 184</span></span>
+<span><span class="co">#&gt; [1] 185</span></span>
+<span><span class="co">#&gt; [1] 186</span></span>
+<span><span class="co">#&gt; [1] 187</span></span>
+<span><span class="co">#&gt; [1] 188</span></span>
+<span><span class="co">#&gt; [1] 189</span></span>
+<span><span class="co">#&gt; [1] 190</span></span>
+<span><span class="co">#&gt; [1] 191</span></span>
+<span><span class="co">#&gt; [1] 192</span></span>
+<span><span class="co">#&gt; [1] 193</span></span>
+<span><span class="co">#&gt; [1] 194</span></span>
+<span><span class="co">#&gt; [1] 195</span></span>
+<span><span class="co">#&gt; [1] 196</span></span>
+<span><span class="co">#&gt; [1] 197</span></span>
+<span><span class="co">#&gt; [1] 198</span></span>
+<span><span class="co">#&gt; [1] 199</span></span>
+<span><span class="co">#&gt; [1] 200</span></span>
+<span><span class="co">#&gt; [1] 201</span></span>
+<span><span class="co">#&gt; [1] 202</span></span>
+<span><span class="co">#&gt; [1] 203</span></span>
+<span><span class="co">#&gt; [1] 204</span></span>
+<span><span class="co">#&gt; [1] 205</span></span>
+<span><span class="co">#&gt; [1] 206</span></span>
+<span><span class="co">#&gt; [1] 207</span></span>
+<span><span class="co">#&gt; [1] 208</span></span>
+<span><span class="co">#&gt; [1] 209</span></span>
+<span><span class="co">#&gt; [1] 210</span></span>
+<span><span class="co">#&gt; [1] 211</span></span>
+<span><span class="co">#&gt; [1] 212</span></span>
+<span><span class="co">#&gt; [1] 213</span></span>
+<span><span class="co">#&gt; [1] 214</span></span>
+<span><span class="co">#&gt; [1] 215</span></span>
+<span><span class="co">#&gt; [1] 216</span></span>
+<span><span class="co">#&gt; [1] 217</span></span>
+<span><span class="co">#&gt; [1] 218</span></span>
+<span><span class="co">#&gt; [1] 219</span></span>
+<span><span class="co">#&gt; [1] 220</span></span>
+<span><span class="co">#&gt; [1] 221</span></span>
+<span><span class="co">#&gt; [1] 222</span></span>
+<span><span class="co">#&gt; [1] 223</span></span>
+<span><span class="co">#&gt; [1] 224</span></span>
+<span><span class="co">#&gt; [1] 225</span></span>
+<span><span class="co">#&gt; [1] 226</span></span>
+<span><span class="co">#&gt; [1] 227</span></span>
+<span><span class="co">#&gt; [1] 228</span></span>
+<span><span class="co">#&gt; [1] 229</span></span>
+<span><span class="co">#&gt; [1] 230</span></span>
+<span><span class="co">#&gt; [1] 231</span></span>
+<span><span class="co">#&gt; [1] 232</span></span>
+<span><span class="co">#&gt; [1] 233</span></span>
+<span><span class="co">#&gt; [1] 234</span></span>
+<span><span class="co">#&gt; [1] 235</span></span>
+<span><span class="co">#&gt; [1] 236</span></span>
+<span><span class="co">#&gt; [1] 237</span></span>
+<span><span class="co">#&gt; [1] 238</span></span>
+<span><span class="co">#&gt; [1] 239</span></span>
+<span><span class="co">#&gt; [1] 240</span></span>
+<span><span class="co">#&gt; [1] 241</span></span>
+<span><span class="co">#&gt; [1] 242</span></span>
+<span><span class="co">#&gt; [1] 243</span></span>
+<span><span class="co">#&gt; [1] 244</span></span>
+<span><span class="co">#&gt; [1] 245</span></span>
+<span><span class="co">#&gt; [1] 246</span></span>
+<span><span class="co">#&gt; [1] 247</span></span>
+<span><span class="co">#&gt; [1] 248</span></span>
+<span><span class="co">#&gt; [1] 249</span></span>
+<span><span class="co">#&gt; [1] 250</span></span>
+<span><span class="co">#&gt; [1] 251</span></span>
+<span><span class="co">#&gt; [1] 252</span></span>
+<span><span class="co">#&gt; [1] 253</span></span>
+<span><span class="co">#&gt; [1] 254</span></span>
+<span><span class="co">#&gt; [1] 255</span></span>
+<span><span class="co">#&gt; [1] 256</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/create_side_by_side_plot.html">create_side_by_side_plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <p><img src="kelly_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">toss_result_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_coin_sequences.html">generate_coin_sequences</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">toss_result_list</span></span>
-<span><span class="co">#&gt;      Var1 Var2</span></span>
-<span><span class="co">#&gt; [1,]    0    0</span></span>
-<span><span class="co">#&gt; [2,]    1    0</span></span>
-<span><span class="co">#&gt; [3,]    0    1</span></span>
-<span><span class="co">#&gt; [4,]    1    1</span></span>
-<span></span>
-<span><span class="co"># iterate over rows of toss_result_list</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#  +</span></span>
-<span><span class="co"># theme(</span></span>
-<span><span class="co">#   legend.position = "none",</span></span>
-<span><span class="co">#   panel.background = element_blank(),</span></span>
-<span><span class="co">#   panel.grid.major = element_blank(),</span></span>
-<span><span class="co">#   panel.grid.minor = element_blank(),</span></span>
-<span><span class="co">#   plot.margin = margin(0, -0.7, 0, 0, "cm")</span></span>
+<code class="sourceCode R"><span><span class="co"># calc_score(toss_result_list,</span></span>
+<span><span class="co">#   min_bet = 1, betting_fraction = 0.75</span></span>
 <span><span class="co"># )</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># lots_of_results &lt;- c()</span></span>
-<span><span class="co"># for (i in 0:50) {</span></span>
-<span><span class="co">#   res &lt;- coin_toss_seq(50, betting_fraction = 0.75, max_payout = 300)</span></span>
-<span><span class="co">#   print(res$payout)</span></span>
-<span><span class="co">#   lots_of_results &lt;- c(lots_of_results, res$payout)</span></span>
-<span><span class="co"># }</span></span>
-<span><span class="co"># # lots_of_results</span></span>
-<span><span class="co"># hist(lots_of_results, breaks = seq(0, 300, 10))</span></span>
-<span><span class="co"># # hist(c(1, 1, 2, 1))</span></span>
-<span></span>
-<span><span class="co"># # get_kelly_bet(0.5, 2, 0.5)</span></span>
-<span></span>
-<span><span class="co"># median(c(1, 1, 5, 20))</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># df &lt;- data.frame(</span></span>
-<span><span class="co">#   betting_fraction = c(0),</span></span>
-<span><span class="co">#   median_payout = c(0)</span></span>
-<span><span class="co"># )</span></span>
-<span></span>
-<span><span class="co"># num_samples &lt;- 10000</span></span>
-<span><span class="co"># for (frac in seq(0, 1, 0.05)) {</span></span>
-<span><span class="co">#   lots_of_results &lt;- c()</span></span>
-<span><span class="co">#   for (j in 1:num_samples) {</span></span>
-<span><span class="co">#     res &lt;- coin_toss_seq(100, betting_fraction = frac, heads_prob = 0.5, max_payout = 10000)</span></span>
-<span><span class="co">#     # print(res$payout)</span></span>
-<span><span class="co">#     lots_of_results &lt;- c(lots_of_results, res$payout)</span></span>
-<span><span class="co">#   }</span></span>
-<span><span class="co">#   # print(median(lots_of_results))</span></span>
-<span><span class="co">#   hist(lots_of_results, main = paste("betting fraction", frac))</span></span>
-<span><span class="co">#   df &lt;- df |&gt; add_row(betting_fraction = frac, median_payout = median(lots_of_results))</span></span>
-<span><span class="co"># }</span></span>
-<span><span class="co"># df |&gt; ggplot(aes(x = betting_fraction, y = median_payout)) +</span></span>
-<span><span class="co">#   geom_point()</span></span>
-<span><span class="co"># # for each</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># generate_coin_sequences &lt;- function(num_flips) {</span></span>
-<span><span class="co">#   outcomes &lt;- c(0, 1)</span></span>
-<span><span class="co">#   sequences &lt;- as.matrix(</span></span>
-<span><span class="co">#     expand.grid(replicate(num_flips, outcomes, simplify = FALSE))</span></span>
-<span><span class="co">#   )</span></span>
-<span><span class="co">#   return(sequences)</span></span>
-<span><span class="co"># }</span></span>
-<span></span>
-<span><span class="co"># # Set the number of coin flips</span></span>
-<span><span class="co"># num_flips &lt;- 3</span></span>
-<span></span>
-<span><span class="co"># # Generate sequences</span></span>
-<span><span class="co"># coin_sequences &lt;- generate_coin_sequences(num_flips)</span></span>
-<span></span>
-<span><span class="co"># # Display the result</span></span>
-<span><span class="co"># print(coin_sequences)</span></span>
-<span><span class="co"># print(as.vector(coin_sequences[1, ]))</span></span></code></pre></div>
+</div>
   </main>
 </div>
 
