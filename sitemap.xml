@@ -10,6 +10,12 @@
     <loc>https://misikoff.github.io/TailRiskAnalyzer/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/articles/kelly.html</loc>
+  </url>
+  <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/authors.html</loc>
   </url>
   <url>
@@ -20,6 +26,9 @@
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/coin_toss_seq.html</loc>
+  </url>
+  <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/create_side_by_side_plot.html</loc>
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/draw_lln_with_func_facet.html</loc>
