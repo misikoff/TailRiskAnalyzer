@@ -9,7 +9,8 @@
 #' @param max_payout Maximum payout
 #' @param betting_fraction Fraction of funds to bet
 #'
-#' @return A list with the results, toss results, and payout
+#' @return A list with the results (list of the payout after each round),
+#'  toss results (list of coin toss results), and payout (integer)
 #' @export
 #'
 #' @examples
@@ -21,7 +22,89 @@ coin_toss_seq <- function(
     starting_capital = 100,
     head_factor = 2,
     tails_factor = 0.5,
-    min_bet = 1,
+    min_bet = 0,
+    max_payout = Inf,
+    betting_fraction = 1) {
+  toss_results <- stats::rbinom(rounds, size = 1, prob = heads_prob)
+
+  results <- calc_score(
+    toss_results = toss_results,
+    starting_capital = starting_capital,
+    head_factor = head_factor,
+    tails_factor = tails_factor,
+    min_bet = min_bet,
+    max_payout = max_payout,
+    betting_fraction = betting_fraction
+  )
+
+  return(
+    list(
+      results = results,
+      payout = results[length(results)],
+      toss_results = toss_results
+    )
+  )
+}
+
+
+#' Perform the coin toss game, given a heads/tails sequence
+#' @param toss_results A sequence of 1s and 0s, representing heads and tails
+#' @param starting_capital Initial amount of money
+#' @param head_factor Factor to multiply bet by if heads
+#' @param tails_factor Factor to multiply bet by if tails
+#' @param min_bet Minimum bet
+#' @param max_payout Maximum payout
+#' @param betting_fraction Fraction of funds to bet
+#' @return A list with the results (list of the payout after each round),
+#' toss results (list of coin toss results), and payout (integer)
+#' @export
+#' @examples
+#' coin_toss(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+get_coin_game_results <- function(
+    toss_results,
+    starting_capital = 100,
+    head_factor = 2,
+    tails_factor = 0.5,
+    min_bet = 0,
+    max_payout = Inf,
+    betting_fraction = 1) {
+  results <- calc_score(
+    toss_results = toss_results,
+    starting_capital = starting_capital,
+    head_factor = head_factor,
+    tails_factor = tails_factor,
+    min_bet = min_bet,
+    max_payout = max_payout,
+    betting_fraction = betting_fraction
+  )
+
+  return(
+    list(
+      results = results,
+      payout = results[length(results)]
+    )
+  )
+}
+
+#' Calculate the payout after each round of the coin toss game
+#' @param toss_results A sequence of 1s and 0s, representing heads and tails
+#' @param starting_capital Initial amount of money
+#' @param head_factor Factor to multiply bet by if heads
+#' @param tails_factor Factor to multiply bet by if tails
+#' @param min_bet Minimum bet
+#' @param max_payout Maximum payout
+#' @param betting_fraction Fraction of funds to bet
+#' @return A list of the payout after each round
+#' @export
+#'
+#' @examples
+#' calc_score(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+calc_score <- function(
+    toss_results,
+    starting_capital = 100,
+    head_factor = 2,
+    tails_factor = 0.5,
+    min_bet = 0,
     max_payout = Inf,
     betting_fraction = 1) {
   if (starting_capital < 0) {
@@ -33,13 +116,15 @@ coin_toss_seq <- function(
   if (tails_factor < 0) {
     stop("tails_factor must be positive")
   }
+  if (min_bet < 0) {
+    stop("min_bet must be positive")
+  }
   # betting_fraction must be between 0 and 1 for now, could add leverage later
   if (betting_fraction < 0 || betting_fraction > 1) {
     stop("betting_fraction must be between 0 and 1")
   }
 
   results <- c(starting_capital)
-  toss_results <- stats::rbinom(rounds, size = 1, prob = heads_prob)
 
   for (res in toss_results) {
     current_funds <- results[length(results)]
@@ -51,6 +136,7 @@ coin_toss_seq <- function(
     if (payout_is_maxed || bet_is_too_small) {
       break
     }
+    # maybe need to fill in the rest with current value
 
     reserve <- current_funds - new_bet
 
@@ -62,11 +148,21 @@ coin_toss_seq <- function(
     results[length(results)] <- min(results[length(results)], max_payout)
   }
 
-  return(
-    list(
-      results = results,
-      toss_results = toss_results,
-      payout = results[length(results)]
-    )
+  return(results)
+}
+
+
+#' Generate all possible coin toss sequences
+#' @param num_flips Number of coin flips
+#' @return A matrix with all possible coin toss sequences
+#' @export
+#'
+#' @examples
+#' generate_coin_sequences(2)
+generate_coin_sequences <- function(num_flips) {
+  outcomes <- c(0, 1)
+  sequences <- as.matrix(
+    expand.grid(replicate(num_flips, outcomes, simplify = FALSE))
   )
+  return(sequences)
 }
