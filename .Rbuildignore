@@ -9,3 +9,5 @@
 
 ^workbench$
 ^readme.html$
+^readme.md$
+^readme.Rmd$

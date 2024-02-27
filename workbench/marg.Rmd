@@ -1,0 +1,93 @@
+---
+title: "Time Series Result Distributions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Time Series Result Distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r setup, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  tidy = FALSE, comment = "#>", fig.width = 6,
+  fig.height = 4, fig.align = "center"
+)
+# Encode the images into the document to make it self-contained (disabled
+# because it looks like GitHub markdown doesn't suppport this)
+# knitr::opts_knit$set(upload.fun = knitr::image_uri)
+```
+
+```{r load-pkg, warning=FALSE, message=FALSE}
+# library("ggExtra")
+library("ggplot2")
+library(egg)
+library(dplyr)
+```
+
+```{r}
+get_multi_time_series <- function(num_lines, length) {
+  results <- c()
+  for (i in 1:num_lines) {
+    results <- c(results, cumsum(rnorm(length)))
+  }
+  return(results)
+}
+
+n <- 400
+num_lines <- 1000
+df <- data.frame(
+  x = rep(1:n, num_lines),
+  y = get_multi_time_series(num_lines, n),
+  entry = as.integer(rep(1:num_lines, each = n))
+)
+# plot the moving average
+time_series_plot <- df |> ggplot(aes(x, y, color = entry, group = entry)) +
+  geom_line(alpha = 0.1) +
+  theme(
+    legend.position = "none",
+    panel.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(0, -0.7, 0, 0, "cm")
+  )
+# xlab(NULL) +
+# ylab(NULL)
+# remove x ticks and labels
+# scale_x_continuous(breaks = NULL)
+
+# plot histogram of last value of each timeseries in df
+hist_plot <- df |>
+  group_by(entry) |>
+  summarise(last_value = last(y)) |>
+  ggplot(aes(last_value)) +
+  geom_histogram(binwidth = 0.5, fill = "blue", color = "black") +
+  # geom_line(stat = "density", color = "blue") +
+  # move y axis to the right
+  # scale_x_continuous(position = "left") +
+  # remove background and gridlines
+  theme(
+    legend.position = "none",
+    # panel.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    # axis.line = element_line(color = "black"),
+    # panel.border = element_rect(
+    #   colour = "black", fill = NA, linewidth = 5
+    # ),
+    # plot.margin = margin(0, 0, 0, 0, "cm")
+  ) +
+  xlab(NULL) +
+  scale_x_continuous(breaks = NULL) +
+  ylab(NULL) +
+  scale_y_continuous(breaks = NULL) +
+  # move x axis label to top
+  # theme(axis.title.x = element_text(margin = margin(t = 10))) +
+  coord_flip()
+
+# show hist plot next to time series plot with 1 row of 2 cols
+ggarrange(time_series_plot, hist_plot,
+  ncol = 2, nrow = 1,
+  widths = c(2, 1),
+  labels = c("Individual Outcomes", "Density of Outcomes")
+)
+```

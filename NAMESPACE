@@ -2,6 +2,7 @@
 
 export(calc_score)
 export(coin_toss_seq)
+export(create_side_by_side_plot)
 export(draw_lln_with_func_facet)
 export(generate_coin_sequences)
 export(get_coin_game_results)
