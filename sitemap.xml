@@ -16,10 +16,19 @@
     <loc>https://misikoff.github.io/TailRiskAnalyzer/index.html</loc>
   </url>
   <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/calc_score.html</loc>
+  </url>
+  <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/coin_toss_seq.html</loc>
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/draw_lln_with_func_facet.html</loc>
+  </url>
+  <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/generate_coin_sequences.html</loc>
+  </url>
+  <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/get_coin_game_results.html</loc>
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/get_kelly_bet.html</loc>
