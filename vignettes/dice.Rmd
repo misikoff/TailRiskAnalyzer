@@ -1,8 +1,8 @@
 ---
-title: "Kelly Betting"
+title: "Dice"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Kelly Betting}
+  %\VignetteIndexEntry{Dice}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,11 +14,16 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
 ```{r setup}
 library(TailRiskAnalyzer)
 library(ggplot2)
 library(dplyr)
 ```
+
+
+# Sample of possible outcomes
 
 ```{r}
 # create empty dataframe with 2 columns, index, and value
@@ -28,24 +33,22 @@ df <- data.frame(
   value = double()
 )
 
-num_lines <- 10
+num_lines <- 1000
 for (i in 1:num_lines) {
-  cur_run <- coin_toss_seq(100, min_bet = 1, betting_fraction = 0.75)
+  cur_run <- die_game_seq(4, 6, payoffs = c(0.5, 1.5, 1.05, 1.05, 1.05, 1.05))
   for (round in seq_along(cur_run$results)) {
     value <- cur_run$results[round]
     df <- df |> add_row(index = i, round = round, value = value)
   }
 }
 
-# get_kelly_bet(0.5, 0.5, 2)
-
 create_side_by_side_plot(df)
 ```
 
-# Theoretical Distribution, based on all possible outcomes
+# Theoretical Dice Game with all possibilities present in proper proportion
 
 ```{r}
-toss_result_list <- generate_coin_sequences(8)
+toss_result_list <- generate_die_sequences(5, 6)
 # toss_result_list
 
 df <- data.frame(
@@ -57,7 +60,8 @@ df <- data.frame(
 # iterate over rows of toss_result_list
 for (i in seq(from = 1, to = nrow(toss_result_list))) {
   # print(i)
-  cur_run <- calc_score_for_coin_game(toss_result_list[i, ],
+  cur_run <- calc_score_for_die(toss_result_list[i, ],
+    payoffs = c(0.5, 1.5, 1.05, 1.05, 1.05, 1.05),
     min_bet = 50, betting_fraction = 0.75
   )
   for (round in seq_along(cur_run)) {
@@ -68,6 +72,3 @@ for (i in seq(from = 1, to = nrow(toss_result_list))) {
 
 create_side_by_side_plot(df)
 ```
-
-
-

@@ -26,7 +26,7 @@ create_side_by_side_plot <- function(df, use_log = TRUE) {
       group = .data$index
     )
   ) +
-    ggplot2::geom_line(alpha = 0.1) +
+    ggplot2::geom_line(alpha = 0.5) +
     ggplot2::theme(
       legend.position = "none",
       panel.background = ggplot2::element_blank(),
