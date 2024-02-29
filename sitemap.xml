@@ -10,6 +10,9 @@
     <loc>https://misikoff.github.io/TailRiskAnalyzer/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/articles/dice.html</loc>
+  </url>
+  <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/articles/index.html</loc>
   </url>
   <url>
@@ -22,7 +25,10 @@
     <loc>https://misikoff.github.io/TailRiskAnalyzer/index.html</loc>
   </url>
   <url>
-    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/calc_score.html</loc>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/calc_score_for_coin_game.html</loc>
+  </url>
+  <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/calc_score_for_die.html</loc>
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/coin_toss_seq.html</loc>
@@ -31,10 +37,16 @@
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/create_side_by_side_plot.html</loc>
   </url>
   <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/die_game_seq.html</loc>
+  </url>
+  <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/draw_lln_with_func_facet.html</loc>
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/generate_coin_sequences.html</loc>
+  </url>
+  <url>
+    <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/generate_die_sequences.html</loc>
   </url>
   <url>
     <loc>https://misikoff.github.io/TailRiskAnalyzer/reference/get_coin_game_results.html</loc>
