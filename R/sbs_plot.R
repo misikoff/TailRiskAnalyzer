@@ -2,6 +2,7 @@
 #'
 #' @param df A data frame with columns `round`, `value`, and `index`
 #' @param use_log Whether to use a log scale
+#' @param quantiles A vector of quantiles to show as lines
 #'
 #' @return A ggplot2 object
 #'
@@ -15,52 +16,88 @@
 #'   index = "A"
 #' ))
 #'
-create_side_by_side_plot <- function(df, use_log = TRUE) {
+create_side_by_side_plot <- function(df, use_log = TRUE, quantiles = c()) {
   # handle use_log
   # handle different column names
-  time_series_plot <- df |> ggplot2::ggplot(
-    ggplot2::aes(
-      x = .data$round,
-      y = log(.data$value),
-      color = .data$index,
-      group = .data$index
+
+  if (use_log) {
+    df <- df |>
+      dplyr::mutate(value = log(.data$value))
+  }
+
+  arranged <- df |>
+    dplyr::group_by(.data$index) |>
+    dplyr::summarise(last_value = dplyr::last(.data$value)) |>
+    dplyr::arrange(.data$last_value)
+
+  special_indices <- c()
+
+  for (quantile in quantiles) {
+    special_index <- arranged |>
+      dplyr::slice(ceiling(quantiles * nrow(arranged))) |>
+      dplyr::pull(.data$index)
+
+    special_indices <- c(special_indices, special_index)
+  }
+
+  # add boolean column to df indicating if line the 95th percentile line
+  df <- df |>
+    dplyr::mutate(
+      is_special = .data$index %in% special_indices,
+      opacity = ifelse(.data$is_special, 1, 0.2),
+      color = ifelse(.data$is_special, "black", "blue"),
+      size = ifelse(.data$is_special, 1, 1)
     )
-  ) +
-    ggplot2::geom_line(alpha = 0.1) +
+
+  time_series_plot <- df |>
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = .data$round,
+        y = .data$value,
+        group = .data$index
+      ),
+    ) +
+    ggplot2::geom_line(ggplot2::aes(alpha = .data$opacity)) +
     ggplot2::theme(
       legend.position = "none",
       panel.background = ggplot2::element_blank(),
       panel.grid.major = ggplot2::element_blank(),
       panel.grid.minor = ggplot2::element_blank(),
       plot.margin = ggplot2::margin(0, -0.7, 0, 0, "cm")
-    )
+    ) +
+    ggplot2::ylab(ifelse(use_log, "Log Value", "Value"))
 
-  hist_plot <- df |>
+  hist_df <- df |>
     dplyr::group_by(.data$index) |>
-    dplyr::summarise(last_value = dplyr::last(.data$value)) |>
-    ggplot2::ggplot(ggplot2::aes(log(.data$last_value))) +
+    dplyr::summarise(last_value = dplyr::last(.data$value))
+
+  # get geometric mean of hist_df$last_value
+  # careful here to handle 0s not sure
+  # geometric_mean <- exp(mean(log(hist_df$last_value), na.rm = TRUE))
+  # print(geometric_mean)
+  median <- median(hist_df$last_value)
+
+  mean <- mean(hist_df$last_value)
+  print(mean)
+
+  hist_plot <- hist_df |>
+    ggplot2::ggplot(ggplot2::aes(.data$last_value)) +
     ggplot2::geom_histogram(binwidth = 0.5, fill = "blue", color = "black") +
-    # geom_line(stat = "density", color = "blue") +
-    # move y axis to the right
-    # scale_x_continuous(position = "left") +
-    # remove background and gridlines
     ggplot2::theme(
       legend.position = "none",
-      # panel.background = element_blank(),
       panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      # axis.line = element_line(color = "black"),
-      # panel.border = element_rect(
-      #   colour = "black", fill = NA, linewidth = 5
-      # ),
-      # plot.margin = margin(0, 0, 0, 0, "cm")
+      panel.grid.minor = ggplot2::element_blank()
     ) +
     ggplot2::xlab(NULL) +
     ggplot2::scale_x_continuous(breaks = NULL) +
     ggplot2::ylab(NULL) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    # move x axis label to top
-    # theme(axis.title.x = element_text(margin = margin(t = 10))) +
+    ggplot2::geom_vline(
+      xintercept = mean, color = "red", size = 1, linetype = "dashed"
+    ) +
+    ggplot2::geom_vline(
+      xintercept = median, color = "black", size = 1, linetype = "dashed"
+    ) +
     ggplot2::coord_flip()
 
   # show hist plot next to time series plot with 1 row of 2 cols

@@ -23,7 +23,8 @@ coin_toss_seq <- function(
     min_bet = 0,
     max_payout = Inf,
     betting_fraction = 1) {
-  toss_results <- stats::rbinom(rounds, size = 1, prob = heads_prob)
+  # plus one to convert results to 1 for heads and 2 for tails
+  toss_results <- stats::rbinom(rounds, size = 1, prob = heads_prob) + 1
 
   results <- calc_score_for_coin_game(
     toss_results = toss_results,
@@ -106,65 +107,14 @@ calc_score_for_coin_game <- function(
     max_payout = Inf,
     betting_fraction = 1) {
   # treat coin toss game with heads factor and tails factor as 2-sided die game
-  # return(calc_score_for_die(
-  #   toss_results = toss_results,
-  #   starting_capital = starting_capital,
-  #   payoffs = c(head_factor, tails_factor),
-  #   min_bet = min_bet,
-  #   max_payout = max_payout,
-  #   betting_fraction = betting_fraction
-  # ))
-
-  if (starting_capital < 0) {
-    stop("starting_capital must be positive")
-  }
-  if (head_factor < 0) {
-    stop("head_factor must be positive")
-  }
-  if (tails_factor < 0) {
-    stop("tails_factor must be positive")
-  }
-  if (min_bet < 0) {
-    stop("min_bet must be positive")
-  }
-  # betting_fraction must be between 0 and 1 for now, could add leverage later
-  if (betting_fraction < 0 || betting_fraction > 1) {
-    stop("betting_fraction must be between 0 and 1")
-  }
-
-  expected_num_values <- length(toss_results) + 1
-
-  results <- c(starting_capital)
-  for (res in toss_results) {
-    current_funds <- results[length(results)]
-    new_bet <- current_funds * betting_fraction
-
-    payout_is_maxed <- current_funds >= max_payout
-    bet_is_too_small <- new_bet < min_bet
-
-    if (payout_is_maxed || bet_is_too_small) {
-      # fill in the rest with current value
-      if (length(results) < expected_num_values) {
-        results <- c(results, rep(
-          results[length(results)],
-          expected_num_values - length(results)
-        ))
-      }
-
-      break
-    }
-
-    reserve <- current_funds - new_bet
-
-    # 1 for heads, 0 for tails
-    current_factor <- ifelse(res, head_factor, tails_factor)
-
-    results <- c(results, reserve + (new_bet * current_factor))
-
-    results[length(results)] <- min(results[length(results)], max_payout)
-  }
-
-  return(results)
+  return(calc_score_for_die(
+    toss_results = toss_results,
+    starting_capital = starting_capital,
+    payoffs = c(head_factor, tails_factor),
+    min_bet = min_bet,
+    max_payout = max_payout,
+    betting_fraction = betting_fraction
+  ))
 }
 
 

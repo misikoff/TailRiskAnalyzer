@@ -4,12 +4,14 @@
 \alias{create_side_by_side_plot}
 \title{Create a side-by-side plot of time series and histogram}
 \usage{
-create_side_by_side_plot(df, use_log = TRUE)
+create_side_by_side_plot(df, use_log = TRUE, quantiles = c())
 }
 \arguments{
 \item{df}{A data frame with columns \code{round}, \code{value}, and \code{index}}
 
 \item{use_log}{Whether to use a log scale}
+
+\item{quantiles}{A vector of quantiles to show as lines}
 }
 \value{
 A ggplot2 object
