@@ -59,7 +59,7 @@
 <span>  rounds <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  heads_prob <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  starting_capital <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  head_factor <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  heads_factor <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  tails_factor <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  min_bet <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  max_payout <span class="op">=</span> <span class="cn">Inf</span>,</span>
@@ -81,7 +81,7 @@
 <dd><p>Initial amount of money</p></dd>
 
 
-<dt>head_factor</dt>
+<dt>heads_factor</dt>
 <dd><p>Factor to multiply bet by if heads</p></dd>
 
 
@@ -112,6 +112,7 @@ toss results (list of coin toss results), and payout (integer)</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">coin_toss_seq</span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.5</span>, <span class="fl">100</span>, <span class="fl">2</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>coercing argument of type 'double' to logical</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $results</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 100.0000 150.0000 112.5000  84.3750 126.5625 189.8438 284.7656 427.1484</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 640.7227 480.5420 360.4065</span>

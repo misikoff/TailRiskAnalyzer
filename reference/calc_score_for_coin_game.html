@@ -58,7 +58,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calc_score_for_coin_game</span><span class="op">(</span></span>
 <span>  <span class="va">toss_results</span>,</span>
 <span>  starting_capital <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  head_factor <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  heads_factor <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  tails_factor <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  min_bet <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  max_payout <span class="op">=</span> <span class="cn">Inf</span>,</span>
@@ -69,14 +69,14 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>toss_results</dt>
-<dd><p>A sequence of 1s and 0s, representing heads and tails</p></dd>
+<dd><p>A sequence of 1s and 2s, representing heads and tails</p></dd>
 
 
 <dt>starting_capital</dt>
 <dd><p>Initial amount of money</p></dd>
 
 
-<dt>head_factor</dt>
+<dt>heads_factor</dt>
 <dd><p>Factor to multiply bet by if heads</p></dd>
 
 
