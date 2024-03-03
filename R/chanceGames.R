@@ -2,7 +2,7 @@
 #' @param rounds Number of rounds to simulate
 #' @param heads_prob Probability of heads
 #' @param starting_capital Initial amount of money
-#' @param head_factor Factor to multiply bet by if heads
+#' @param heads_factor Factor to multiply bet by if heads
 #' @param tails_factor Factor to multiply bet by if tails
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
@@ -18,7 +18,7 @@ coin_toss_seq <- function(
     rounds = 1,
     heads_prob = 0.5,
     starting_capital = 100,
-    head_factor = 2,
+    heads_factor = 2,
     tails_factor = 0.5,
     min_bet = 0,
     max_payout = Inf,
@@ -29,7 +29,7 @@ coin_toss_seq <- function(
   results <- calc_score_for_coin_game(
     toss_results = toss_results,
     starting_capital = starting_capital,
-    head_factor = head_factor,
+    heads_factor = heads_factor,
     tails_factor = tails_factor,
     min_bet = min_bet,
     max_payout = max_payout,
@@ -49,7 +49,7 @@ coin_toss_seq <- function(
 #' Perform the coin toss game, given a heads/tails sequence
 #' @param toss_results A sequence of 1s and 0s, representing heads and tails
 #' @param starting_capital Initial amount of money
-#' @param head_factor Factor to multiply bet by if heads
+#' @param heads_factor Factor to multiply bet by if heads
 #' @param tails_factor Factor to multiply bet by if tails
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
@@ -62,7 +62,7 @@ coin_toss_seq <- function(
 get_coin_game_results <- function(
     toss_results,
     starting_capital = 100,
-    head_factor = 2,
+    heads_factor = 2,
     tails_factor = 0.5,
     min_bet = 0,
     max_payout = Inf,
@@ -70,7 +70,7 @@ get_coin_game_results <- function(
   results <- calc_score_for_coin_game(
     toss_results = toss_results,
     starting_capital = starting_capital,
-    head_factor = head_factor,
+    heads_factor = heads_factor,
     tails_factor = tails_factor,
     min_bet = min_bet,
     max_payout = max_payout,
@@ -86,9 +86,9 @@ get_coin_game_results <- function(
 }
 
 #' Calculate the payout after each round of the coin toss game
-#' @param toss_results A sequence of 1s and 0s, representing heads and tails
+#' @param toss_results A sequence of 1s and 2s, representing heads and tails
 #' @param starting_capital Initial amount of money
-#' @param head_factor Factor to multiply bet by if heads
+#' @param heads_factor Factor to multiply bet by if heads
 #' @param tails_factor Factor to multiply bet by if tails
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
@@ -101,7 +101,7 @@ get_coin_game_results <- function(
 calc_score_for_coin_game <- function(
     toss_results,
     starting_capital = 100,
-    head_factor = 2,
+    heads_factor = 2,
     tails_factor = 0.5,
     min_bet = 0,
     max_payout = Inf,
@@ -110,7 +110,7 @@ calc_score_for_coin_game <- function(
   return(calc_score_for_die(
     toss_results = toss_results,
     starting_capital = starting_capital,
-    payoffs = c(head_factor, tails_factor),
+    payoffs = c(heads_factor, tails_factor),
     min_bet = min_bet,
     max_payout = max_payout,
     betting_fraction = betting_fraction
@@ -127,16 +127,7 @@ calc_score_for_coin_game <- function(
 #' @examples
 #' generate_coin_sequences(2)
 generate_coin_sequences <- function(flips) {
-  # cant swap this yet because the rolls are based on 0, 1 not 1,2
-  # return(generate_die_sequences(rolls = flips, sides = 2))
-  if (flips < 0) {
-    stop("num_rolls must be positive")
-  }
-  outcomes <- c(0, 1)
-  sequences <- as.matrix(
-    expand.grid(replicate(flips, outcomes, simplify = FALSE))
-  )
-  return(sequences)
+  return(generate_die_sequences(rolls = flips, sides = 2))
 }
 
 #' Generate all possible die sequences
@@ -248,6 +239,9 @@ calc_score_for_die <- function(
   # betting_fraction must be between 0 and 1 for now, could add leverage later
   if (betting_fraction < 0 || betting_fraction > 1) {
     stop("betting_fraction must be between 0 and 1")
+  }
+  if (!(any(toss_results) %in% seq_along(payoffs))) {
+    stop("toss_results must be between 1 and the length of payoffs")
   }
 
   expected_num_values <- length(toss_results) + 1

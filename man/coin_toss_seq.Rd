@@ -8,7 +8,7 @@ coin_toss_seq(
   rounds = 1,
   heads_prob = 0.5,
   starting_capital = 100,
-  head_factor = 2,
+  heads_factor = 2,
   tails_factor = 0.5,
   min_bet = 0,
   max_payout = Inf,
@@ -22,7 +22,7 @@ coin_toss_seq(
 
 \item{starting_capital}{Initial amount of money}
 
-\item{head_factor}{Factor to multiply bet by if heads}
+\item{heads_factor}{Factor to multiply bet by if heads}
 
 \item{tails_factor}{Factor to multiply bet by if tails}
 

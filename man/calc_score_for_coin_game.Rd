@@ -7,7 +7,7 @@
 calc_score_for_coin_game(
   toss_results,
   starting_capital = 100,
-  head_factor = 2,
+  heads_factor = 2,
   tails_factor = 0.5,
   min_bet = 0,
   max_payout = Inf,
@@ -15,11 +15,11 @@ calc_score_for_coin_game(
 )
 }
 \arguments{
-\item{toss_results}{A sequence of 1s and 0s, representing heads and tails}
+\item{toss_results}{A sequence of 1s and 2s, representing heads and tails}
 
 \item{starting_capital}{Initial amount of money}
 
-\item{head_factor}{Factor to multiply bet by if heads}
+\item{heads_factor}{Factor to multiply bet by if heads}
 
 \item{tails_factor}{Factor to multiply bet by if tails}
 
