@@ -62,7 +62,10 @@
 <span>  starting_capital <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  min_bet <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  max_payout <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  betting_fraction <span class="op">=</span> <span class="fl">1</span></span>
+<span>  betting_fraction <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  insurance_payoffs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  use_insurance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  insurance_cost <span class="op">=</span> <span class="fl">0.1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -94,6 +97,19 @@
 
 <dt>betting_fraction</dt>
 <dd><p>Fraction of funds to bet</p></dd>
+
+
+<dt>insurance_payoffs</dt>
+<dd><p>a list of the payoffs for insurance,
+one for each side of the die</p></dd>
+
+
+<dt>use_insurance</dt>
+<dd><p>Whether to use insurance</p></dd>
+
+
+<dt>insurance_cost</dt>
+<dd><p>Cost of insurance</p></dd>
 
 </dl></div>
     <div class="section level2">

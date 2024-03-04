@@ -63,7 +63,10 @@
 <span>  tails_factor <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  min_bet <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  max_payout <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  betting_fraction <span class="op">=</span> <span class="fl">1</span></span>
+<span>  betting_fraction <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  insurance_payoffs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  use_insurance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  insurance_cost <span class="op">=</span> <span class="fl">0.1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -100,6 +103,19 @@
 <dt>betting_fraction</dt>
 <dd><p>Fraction of funds to bet</p></dd>
 
+
+<dt>insurance_payoffs</dt>
+<dd><p>a list of the payoffs for insurance,
+one for each side of the coin</p></dd>
+
+
+<dt>use_insurance</dt>
+<dd><p>Whether to use insurance</p></dd>
+
+
+<dt>insurance_cost</dt>
+<dd><p>Cost of insurance</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -112,7 +128,6 @@ toss results (list of coin toss results), and payout (integer)</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">coin_toss_seq</span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.5</span>, <span class="fl">100</span>, <span class="fl">2</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>coercing argument of type 'double' to logical</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $results</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 100.0000 150.0000 112.5000  84.3750 126.5625 189.8438 284.7656 427.1484</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 640.7227 480.5420 360.4065</span>
