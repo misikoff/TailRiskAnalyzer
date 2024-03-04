@@ -11,7 +11,10 @@ calc_score_for_coin_game(
   tails_factor = 0.5,
   min_bet = 0,
   max_payout = Inf,
-  betting_fraction = 1
+  betting_fraction = 1,
+  insurance_payoffs = c(0, 1),
+  use_insurance = FALSE,
+  insurance_cost = 0.1
 )
 }
 \arguments{
@@ -28,6 +31,13 @@ calc_score_for_coin_game(
 \item{max_payout}{Maximum payout}
 
 \item{betting_fraction}{Fraction of funds to bet}
+
+\item{insurance_payoffs}{a list of the payoffs for insurance,
+one for each side of the coin}
+
+\item{use_insurance}{Whether to use insurance}
+
+\item{insurance_cost}{Cost of insurance}
 }
 \value{
 A list of the payout after each round
@@ -36,5 +46,5 @@ A list of the payout after each round
 Calculate the payout after each round of the coin toss game
 }
 \examples{
-calc_score_for_coin_game(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+calc_score_for_coin_game(1:2, 100, 2, 0.5, 1, 1000, 0.5)
 }

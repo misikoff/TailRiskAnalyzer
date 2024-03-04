@@ -12,7 +12,10 @@ coin_toss_seq(
   tails_factor = 0.5,
   min_bet = 0,
   max_payout = Inf,
-  betting_fraction = 1
+  betting_fraction = 1,
+  insurance_payoffs = c(0, 1),
+  use_insurance = FALSE,
+  insurance_cost = 0.1
 )
 }
 \arguments{
@@ -31,6 +34,13 @@ coin_toss_seq(
 \item{max_payout}{Maximum payout}
 
 \item{betting_fraction}{Fraction of funds to bet}
+
+\item{insurance_payoffs}{a list of the payoffs for insurance,
+one for each side of the coin}
+
+\item{use_insurance}{Whether to use insurance}
+
+\item{insurance_cost}{Cost of insurance}
 }
 \value{
 A list with the results (list of the payout after each round),

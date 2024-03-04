@@ -7,6 +7,10 @@
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
 #' @param betting_fraction Fraction of funds to bet
+#' @param insurance_payoffs a list of the payoffs for insurance,
+#' one for each side of the coin
+#' @param use_insurance Whether to use insurance
+#' @param insurance_cost Cost of insurance
 #'
 #' @return A list with the results (list of the payout after each round),
 #'  toss results (list of coin toss results), and payout (integer)
@@ -22,7 +26,10 @@ coin_toss_seq <- function(
     tails_factor = 0.5,
     min_bet = 0,
     max_payout = Inf,
-    betting_fraction = 1) {
+    betting_fraction = 1,
+    insurance_payoffs = c(0, 1),
+    use_insurance = FALSE,
+    insurance_cost = 0.1) {
   # plus one to convert results to 1 for heads and 2 for tails
   toss_results <- stats::rbinom(rounds, size = 1, prob = heads_prob) + 1
 
@@ -33,7 +40,10 @@ coin_toss_seq <- function(
     tails_factor = tails_factor,
     min_bet = min_bet,
     max_payout = max_payout,
-    betting_fraction = betting_fraction
+    betting_fraction = betting_fraction,
+    insurance_payoffs = insurance_payoffs,
+    use_insurance = use_insurance,
+    insurance_cost = insurance_cost
   )
 
   return(
@@ -58,7 +68,7 @@ coin_toss_seq <- function(
 #' toss results (list of coin toss results), and payout (integer)
 #' @export
 #' @examples
-#' get_coin_game_results(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+#' get_coin_game_results(1:2, 100, 2, 0.5, 1, 1000, 0.5)
 get_coin_game_results <- function(
     toss_results,
     starting_capital = 100,
@@ -93,11 +103,16 @@ get_coin_game_results <- function(
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
 #' @param betting_fraction Fraction of funds to bet
+#' @param insurance_payoffs a list of the payoffs for insurance,
+#' one for each side of the coin
+#' @param use_insurance Whether to use insurance
+#' @param insurance_cost Cost of insurance
+#'
 #' @return A list of the payout after each round
 #' @export
 #'
 #' @examples
-#' calc_score_for_coin_game(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+#' calc_score_for_coin_game(1:2, 100, 2, 0.5, 1, 1000, 0.5)
 calc_score_for_coin_game <- function(
     toss_results,
     starting_capital = 100,
@@ -105,7 +120,10 @@ calc_score_for_coin_game <- function(
     tails_factor = 0.5,
     min_bet = 0,
     max_payout = Inf,
-    betting_fraction = 1) {
+    betting_fraction = 1,
+    insurance_payoffs = c(0, 1),
+    use_insurance = FALSE,
+    insurance_cost = 0.1) {
   # treat coin toss game with heads factor and tails factor as 2-sided die game
   return(calc_score_for_die(
     toss_results = toss_results,
@@ -113,7 +131,10 @@ calc_score_for_coin_game <- function(
     payoffs = c(heads_factor, tails_factor),
     min_bet = min_bet,
     max_payout = max_payout,
-    betting_fraction = betting_fraction
+    betting_fraction = betting_fraction,
+    insurance_payoffs = insurance_payoffs,
+    use_insurance = use_insurance,
+    insurance_cost = insurance_cost
   ))
 }
 
@@ -161,6 +182,10 @@ generate_die_sequences <- function(rolls, sides = 6) {
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
 #' @param betting_fraction Fraction of funds to bet
+#' @param insurance_payoffs a list of the payoffs for insurance,
+#' one for each side of the die
+#' @param use_insurance Whether to use insurance
+#' @param insurance_cost Cost of insurance
 #' @return A matrix with all possible coin toss sequences
 #' @export
 #'
@@ -173,7 +198,10 @@ die_game_seq <- function(
     starting_capital = 100,
     min_bet = 0,
     max_payout = Inf,
-    betting_fraction = 1) {
+    betting_fraction = 1,
+    insurance_payoffs = c(0, 1),
+    use_insurance = FALSE,
+    insurance_cost = 0.1) {
   if (rolls < 0) {
     stop("num_rolls must be positive")
   }
@@ -194,7 +222,10 @@ die_game_seq <- function(
     payoffs = payoffs,
     min_bet = min_bet,
     max_payout = max_payout,
-    betting_fraction = betting_fraction
+    betting_fraction = betting_fraction,
+    insurance_payoffs = insurance_payoffs,
+    use_insurance = use_insurance,
+    insurance_cost = insurance_cost
   )
 
   return(
@@ -214,6 +245,11 @@ die_game_seq <- function(
 #' @param min_bet Minimum bet
 #' @param max_payout Maximum payout
 #' @param betting_fraction Fraction of funds to bet
+#' @param insurance_payoffs a list of the payoffs for insurance,
+#' one for each side of the die
+#' @param use_insurance Whether to use insurance
+#' @param insurance_cost Cost of insurance
+#'
 #' @return A list of the payout after each round
 #' @export
 #'
@@ -225,14 +261,16 @@ calc_score_for_die <- function(
     payoffs = c(2, 0.5),
     min_bet = 0,
     max_payout = Inf,
-    betting_fraction = 1) {
+    betting_fraction = 1,
+    insurance_payoffs = c(0, 1),
+    use_insurance = FALSE,
+    insurance_cost = 0.1) {
   if (starting_capital < 0) {
     stop("starting_capital must be positive")
   }
   if (any(payoffs < 0)) {
     stop("all payoffs must be positive")
   }
-
   if (min_bet < 0) {
     stop("min_bet must be positive")
   }
@@ -240,8 +278,12 @@ calc_score_for_die <- function(
   if (betting_fraction < 0 || betting_fraction > 1) {
     stop("betting_fraction must be between 0 and 1")
   }
-  if (!(any(toss_results) %in% seq_along(payoffs))) {
+  if (!(all(toss_results %in% seq_along(payoffs)))) {
     stop("toss_results must be between 1 and the length of payoffs")
+  }
+  if (use_insurance && length(insurance_payoffs) != length(payoffs)) {
+    stop("Length of insurance_payoffs must equal sides.
+    There must be a payoff for each side.")
   }
 
   expected_num_values <- length(toss_results) + 1
@@ -270,7 +312,19 @@ calc_score_for_die <- function(
 
     current_factor <- payoffs[res]
 
-    results <- c(results, reserve + (new_bet * current_factor))
+    if (use_insurance) {
+      current_factor <- max(payoffs[res], insurance_payoffs[res])
+      current_factor <- current_factor - insurance_cost
+    }
+
+    # if uninsured, the insured factor is the same as the current factor
+    current_insured_factor <-
+      ifelse(use_insurance, insurance_payoffs[res], payoffs[res])
+
+    results <- c(
+      results,
+      reserve + (new_bet * max(current_factor, current_insured_factor))
+    )
 
     results[length(results)] <- min(results[length(results)], max_payout)
   }

@@ -37,5 +37,5 @@ toss results (list of coin toss results), and payout (integer)
 Perform the coin toss game, given a heads/tails sequence
 }
 \examples{
-get_coin_game_results(0:1, 100, 2, 0.5, 1, 1000, 0.5)
+get_coin_game_results(1:2, 100, 2, 0.5, 1, 1000, 0.5)
 }
